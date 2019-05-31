@@ -1,0 +1,38 @@
+<div class="jumbotron">
+
+  <form>
+
+    <div class="form-group">
+      <label for="QuestionTitle">Question Title</label>
+      <input [(ngModel)]="question.title" type="text"
+             name="title"
+             class="form-control"
+             id="QuestionTitle"
+             placeholder="Title">
+    </div>
+
+
+    <div class="form-group">
+      <label for="QuestionBody">Question</label>
+      <textarea [(ngModel)]="question.question" type="text"
+             name="question"
+             class="form-control"
+             rows="5"
+             id="QuestionBody"
+                placeholder="Question">
+      </textarea>
+    </div>
+
+    <form [formGroup]="form">
+      <label formArrayName="orders" *ngFor="let tag of form.controls.orders.controls; let i = index">
+        <input type="checkbox" [formControlName]="i">
+        {{availableTags[i].tagName}}
+      </label>
+
+    </form>
+
+
+
+    <i (click)="clickFunction()" type="submit" class="btn btn-primary">Submit</i>
+  </form>
+</div>

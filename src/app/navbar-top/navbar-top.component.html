@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <span class="navbar-brand" href="#">
+    {{ title }}
+  </span>
+
+  <button class="navbar-toggler" type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <button class="nav-item nav-link active btn btn-outline-warning" routerLink="newQuestion">New Question<span class="sr-only">(current)</span></button>
+      <span *ngFor="let tag of tagList">
+      <button class="nav-item nav-link active btn btn-info" routerLink="home">{{ tag.tagName }}<span class="sr-only">(current)</span></button>
+<!--      <button class="nav-item nav-link active btn btn-info">Home <span class="sr-only">(current)</span></button>-->
+<!--      <button class="nav-item nav-link btn btn-info">Features</button>-->
+<!--      <button class="nav-item nav-link btn btn-info">Pricing</button>-->
+<!--      <button class="nav-item nav-link disabled" href="#">Disabled</button>-->
+        </span>
+    </div>
+  </div>
+
+</nav>
