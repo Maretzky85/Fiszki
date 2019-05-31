@@ -23,8 +23,19 @@
       </textarea>
     </div>
 
+    <div class="form-group">
+      <label for="AnswerBody">Answer</label>
+      <textarea [(ngModel)]="answer.answer" type="text"
+                name="Answer"
+                class="form-control"
+                rows="5"
+                id="AnswerBody"
+                placeholder="Answer">
+      </textarea>
+    </div>
+
     <form [formGroup]="form">
-      <label formArrayName="orders" *ngFor="let tag of form.controls.orders.controls; let i = index">
+      <label formArrayName="tags" *ngFor="let tag of form.controls.tags.value; let i = index">
         <input type="checkbox" [formControlName]="i">
         {{availableTags[i].tagName}}
       </label>

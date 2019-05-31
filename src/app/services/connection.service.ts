@@ -18,6 +18,10 @@ export class ConnectionService {
     return this.http.get(this.address + 'tags');
   }
 
+  getQuestionsByTagName(tagName: string) {
+    return this.http.get(this.address + tagName + '/questions');
+  }
+
   sendNewQuestion(question: QuestionModel) {
     console.log(JSON.stringify(question))
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');

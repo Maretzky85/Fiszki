@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ConnectionService} from '../services/connection.service';
-import {TagModel} from '../models/tagModel';
 import {QuestionTag} from '../models/responseInterface';
+import {CategoryDataSharingService} from '../services/category-data-sharing.service';
 
 @Component({
   selector: 'app-navbar-top',
@@ -14,17 +14,21 @@ export class NavbarTopComponent implements OnInit {
 
   tagList;
 
-  constructor(private connection: ConnectionService) {
+  constructor(private connection: ConnectionService,
+              private categorySharingService: CategoryDataSharingService) {
+  }
+
+  changeCategory(category: string) {
+    console.log(category);
+    this.categorySharingService.changeMessage(category);
   }
 
   ngOnInit() {
     this.connection.getTags().subscribe(
       (value: QuestionTag[]) => {
         this.tagList = value;
-        console.log(value);
       },
       (error) => console.error(error)
     );
-
   }
 }
