@@ -6,10 +6,10 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class CategoryDataSharingService {
 
-  private messageSource = new BehaviorSubject('home');
+  private messageSource = new BehaviorSubject(0);
   currentMessage = this.messageSource.asObservable();
 
-  changeMessage(message: string) {
+  changeMessage(message: number) {
     this.messageSource.next(message);
   }
 

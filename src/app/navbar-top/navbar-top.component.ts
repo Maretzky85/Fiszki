@@ -18,8 +18,7 @@ export class NavbarTopComponent implements OnInit {
               private categorySharingService: CategoryDataSharingService) {
   }
 
-  changeCategory(category: string) {
-    console.log(category);
+  changeCategory(category: number) {
     this.categorySharingService.changeMessage(category);
   }
 

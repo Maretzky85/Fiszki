@@ -1,36 +1,86 @@
+<div *ngIf="question">
 
-<span *ngFor="let tag of question.tags">
-  <span class="badge badge-info"> {{ tag.tagName}} </span>
-</span>
-<div class="card">
-  <div class="card-header">
-    {{ question.title }}
-  </div>
 
-  <div class="card-body">
-    {{ question.question }}
-  </div>
-
-  <span *ngIf="question.answers && question.answers.length > 0">
-    <button class="btn btn-info" (click)="showAnswer()" *ngIf="hidden">Answer</button>
+  <span *ngFor="let tag of question.tags">
+    <span class="badge badge-info"> {{ tag.tagName}} </span>
   </span>
-  <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
-
-    <div class="container">
-
-      <div class="card">
-        <div class="card-header">
-          Answer:
-        </div>
-        <div class="card-body">
-          <app-answer-item *ngFor="let answer of question.answers" [answer] = answer>
-          </app-answer-item>
-        </div>
+  <div class="card">
+    <div>
+      <button *ngIf="!editMode" class="btn btn-outline-warning" (click)="editMode=!editMode">Edit</button>
+      <button *ngIf="!editMode" class="btn btn-outline-danger" (click)="delete()">Delete</button>
+    </div>
+    <div class="card" *ngIf="!editMode">
+      <div class="card-header">
+        {{ question.title }}
       </div>
+      <div class="card-body">
+        {{ question.question }}
+      </div>
+    </div>
 
+    <div *ngIf="editMode" class="card">
+
+      <textarea *ngIf="editMode" class="card-header" [(ngModel)]="question.title">
+    </textarea>
+
+      <textarea *ngIf="editMode" class="card-body" [(ngModel)]="question.question">
+    </textarea>
+
+      <span>
+        <button class="btn btn-outline-success" (click)="submitQuestion()">Save</button>
+        <button class="btn btn-outline-warning" (click)="editMode=!editMode">Cancel</button>
+      </span>
 
 
     </div>
 
+    <button [class.disabled]="disabled" class="btn btn-outline-success" (click)="hasNewAnswer()" *ngIf="!newAnswer">New Answer</button>
+
+    <div *ngIf="newAnswer">
+      <div class="jumbotron">
+
+        <form>
+
+          <div class="form-group">
+            <label for="AnswerBody">New Answer</label>
+            <textarea [(ngModel)]="newAnswer.answer" type="text"
+                      name="answer"
+                      class="form-control"
+                      rows="5"
+                      id="AnswerBody"
+                      placeholder="answer">
+            </textarea>
+          </div>
+
+          <i (click)="submitAnswer()" type="submit" [class.disabled]="disabled" class="btn btn-primary">Submit</i>
+        </form>
+      </div>
+
+    </div>
+
+    <span *ngIf="question.answers && question.answers.length > 0">
+      <button class="btn btn-info" (click)="showAnswer()" *ngIf="hidden">Answer</button>
+    </span>
+    <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
+
+      <div class="container" >
+
+        <div class="card">
+          <div class="card-header">
+            Answer:
+          </div>
+          <div class="card-body">
+            <app-answer-item *ngFor="let answer of question.answers" [answer] = answer (emitter)="updateForChange()">
+            </app-answer-item>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
   </div>
+
+
 </div>

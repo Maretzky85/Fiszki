@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ConnectionService} from '../services/connection.service';
 import { QuestionModel } from '../models/questionModel';
 import {CategoryDataSharingService} from '../services/category-data-sharing.service';
+import {ToastrService} from 'ngx-toastr';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-question',
@@ -12,10 +14,11 @@ export class QuestionComponent implements OnInit {
 
   questionList;
 
-  category: string;
+  category: number;
 
   constructor(private connection: ConnectionService,
-              private categorySharingService: CategoryDataSharingService) { }
+              private categorySharingService: CategoryDataSharingService,
+              private notify: NotificationService) { }
 
 ngOnInit() {
   this.categorySharingService.currentMessage.subscribe((category) => {
@@ -26,8 +29,8 @@ ngOnInit() {
   this.loadQuestions();
   }
 
-  loadQuestions(category?: string) {
-    if (this.category === 'home') {
+  loadQuestions(category?: number) {
+    if (this.category === 0) {
       this.connection.getQuestions()
         .subscribe((value: QuestionModel) => {
             this.questionList = value;

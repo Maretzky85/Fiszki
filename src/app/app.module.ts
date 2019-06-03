@@ -13,6 +13,8 @@ import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NewQuestionComponent } from './new-question/new-question.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonsModule} from 'ngx-bootstrap';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import {ButtonsModule} from 'ngx-bootstrap';
     QuestionItemComponent,
     AnswerItemComponent,
     NavbarTopComponent,
-    NewQuestionComponent
+    NewQuestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,9 @@ import {ButtonsModule} from 'ngx-bootstrap';
     NgbModule,
     FormsModule,
     ButtonsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,7 +23,9 @@
       </textarea>
     </div>
 
-    <div class="form-group">
+    <button class="btn btn-outline-success" (click)="hasAnswer = !hasAnswer">With Answer?</button>
+
+    <div class="form-group" *ngIf="hasAnswer">
       <label for="AnswerBody">Answer</label>
       <textarea [(ngModel)]="answer.answer" type="text"
                 name="Answer"
@@ -35,15 +37,16 @@
     </div>
 
     <form [formGroup]="form">
-      <label formArrayName="tags" *ngFor="let tag of form.controls.tags.value; let i = index">
+      <label formArrayName="tags"
+             *ngFor="let tag of form.controls.tags.value;
+             let i = index; trackBy: trackByIndex">
         <input type="checkbox" [formControlName]="i">
         {{availableTags[i].tagName}}
       </label>
-
     </form>
 
 
 
-    <i (click)="clickFunction()" type="submit" class="btn btn-primary">Submit</i>
+    <i (click)="submit()" type="submit" class="btn btn-primary">Submit</i>
   </form>
 </div>

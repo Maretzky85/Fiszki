@@ -21,12 +21,12 @@
         New Question
         <span class="sr-only">(current)</span></button>
       <button class="nav-item nav-link active btn btn-outline-primary"
-              routerLink="home" (click)="changeCategory('home')">
+              routerLink="home" (click)="changeCategory(0)">
         All
         <span class="sr-only">(current)</span></button>
       <span *ngFor="let tag of tagList; let i = index">
       <button class="nav-item nav-link active btn btn-info"
-              (click)="changeCategory(tagList[i].tagName)"
+              (click)="changeCategory(tagList[i].id)"
               routerLink="home">
         {{ tag.tagName }}
         <span class="sr-only">(current)</span></button>

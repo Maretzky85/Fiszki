@@ -1,5 +1,23 @@
-<!--  <div class="panel panel-primary">-->
+  <div class="panel panel-primary" *ngIf="answer">
     <div class="panel-body">
-      {{ answer.answer }}
+
+      <div><button *ngIf="!editMode" class="btn btn-outline-warning"
+                   (click)="editMode = !editMode">Edit</button>
+
+        <button *ngIf="editMode" (click)="saveEditedAnswer()"
+                class="btn btn-outline-success">Save</button>
+
+        <button *ngIf="editMode" class="btn btn-outline-warning"
+                (click)="editMode = !editMode">Cancel</button>
+      </div>
+
+      <div *ngIf="editMode" >
+        <textarea [(ngModel)]="answer.answer"></textarea>
+      </div>
+
+      <p *ngIf="!editMode">{{ answer.answer }}</p>
+
+      <button *ngIf="!editMode" (click)="deleteAnswer()"
+              class="btn btn-outline-danger">Delete</button>
     </div>
-<!--  </div>-->
+  </div>

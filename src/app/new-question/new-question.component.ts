@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../services/connection.service';
-import {QuestionModel} from '../models/questionModel';
-import {Answer, QuestionTag} from '../models/responseInterface';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {AnswerModel} from '../models/answerModel';
+import { QuestionModel } from '../models/questionModel';
+import { QuestionTag } from '../models/responseInterface';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AnswerModel } from '../models/answerModel';
 
 @Component({
   selector: 'app-new-question',
@@ -19,6 +19,8 @@ export class NewQuestionComponent implements OnInit {
 
   answer: AnswerModel;
 
+  hasAnswer = false;
+
   constructor(private connection: ConnectionService, private formBuilder: FormBuilder) {
     this.question = new QuestionModel();
     this.answer = new AnswerModel();
@@ -28,8 +30,7 @@ export class NewQuestionComponent implements OnInit {
 
     this.connection.getTags().subscribe( (value: QuestionTag[]) => {
       this.availableTags = value;
-      this.addCheckboxes();
-      console.log(value); } );
+      this.addCheckboxes(); } );
   }
 
   private addCheckboxes() {
@@ -39,19 +40,22 @@ export class NewQuestionComponent implements OnInit {
     });
   }
 
-  clickFunction() {
+  submit() {
     this.question.answers = [];
     this.question.tags = [];
     if (this.answer.answer) {
       const answer = new AnswerModel();
       answer.answer = this.answer.answer;
       this.question.answers.push(answer);
-    } ;
+    }
     this.form.value.tags
       .map((v, i) => v ? this.question.tags.push(this.availableTags[i])  : null)
       .filter(v => v !== null);
-    console.log(this.question);
     this.connection.sendNewQuestion(this.question).subscribe(value => console.log(value));
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
   }
 
   ngOnInit() {
