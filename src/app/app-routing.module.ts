@@ -9,12 +9,12 @@ const routes: Routes = [
     component: QuestionComponent
   },
   {
-    path: 'newQuestion',
-    component: NewQuestionComponent
+    path: 'questions/:id',
+    component: QuestionComponent
   },
   {
-    path: 'courses',
-    component: QuestionComponent
+    path: 'newQuestion',
+    component: NewQuestionComponent
   },
   {
     path: '',

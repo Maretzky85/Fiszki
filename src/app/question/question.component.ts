@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ConnectionService} from '../services/connection.service';
 import { QuestionModel } from '../models/questionModel';
 import {CategoryDataSharingService} from '../services/category-data-sharing.service';
-import {ToastrService} from 'ngx-toastr';
 import {NotificationService} from '../services/notification.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -12,32 +12,48 @@ import {NotificationService} from '../services/notification.service';
 })
 export class QuestionComponent implements OnInit {
 
-  questionList;
+  questionList: QuestionModel[] = [];
 
-  category: number;
+  questionId: number;
 
   constructor(private connection: ConnectionService,
               private categorySharingService: CategoryDataSharingService,
-              private notify: NotificationService) { }
+              private notify: NotificationService,
+              private route: ActivatedRoute) { }
 
 ngOnInit() {
-  this.categorySharingService.currentMessage.subscribe((category) => {
-    this.category = category;
-    this.loadQuestions(category);
-  }, (error1 => console.log(error1)));
+    this.questionId = Number(this.route.snapshot.paramMap.get('id'));
 
-  this.loadQuestions();
+    this.categorySharingService.currentMessage.subscribe((category) => {
+    if (this.questionId) {
+      this.loadSingleQuestion(this.questionId);
+      delete this.questionId;
+    } else {
+      this.loadAllQuestions(category);
+    }
+    }, (error1 => console.log(error1)));
   }
 
-  loadQuestions(category?: number) {
-    if (this.category === 0) {
+  loadSingleQuestion(questionId: number) {
+    this.connection.getQuestions(questionId)
+      .subscribe(
+        (value: QuestionModel ) => {
+          this.questionList = [];
+          this.questionList.push(value);
+          console.log(this.questionList);
+        }
+      );
+  }
+
+  loadAllQuestions(category?: number) {
+    if (category === 0) {
       this.connection.getQuestions()
-        .subscribe((value: QuestionModel) => {
+        .subscribe((value: QuestionModel[]) => {
             this.questionList = value;
           },
           (error) => console.error(error));
     } else {
-      this.connection.getQuestionsByTagName(this.category).subscribe((value: QuestionModel) => {
+      this.connection.getQuestionsByTagName(category).subscribe((value: QuestionModel[]) => {
           this.questionList = value;
         },
         (error) => console.error(error));

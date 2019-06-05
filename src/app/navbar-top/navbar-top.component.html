@@ -1,9 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <span class="navbar-brand" href="#">
+<nav class="navbar navbar-expand-lg background-primary-dark fixed-top">
+  <span class="navbar-brand">
     {{ title }}
   </span>
 
-  <button class="navbar-toggler" type="button"
+  <button class="navbar-toggler"
+          type="button"
           data-toggle="collapse"
           data-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup"
@@ -16,16 +17,18 @@
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <button class="nav-item nav-link active btn btn-outline-warning"
+      <button class="nav-item nav-link active btn btn-outline-accent color-text mr-1"
               routerLink="newQuestion">
         New Question
         <span class="sr-only">(current)</span></button>
-      <button class="nav-item nav-link active btn btn-outline-primary"
+
+      <button class="nav-item nav-link btn btn-outline-accent mr-1"
               routerLink="home" (click)="changeCategory(0)">
         All
         <span class="sr-only">(current)</span></button>
+
       <span *ngFor="let tag of tagList; let i = index">
-      <button class="nav-item nav-link active btn btn-info"
+      <button class="nav-item nav-link active btn btn-outline-accent mr-1"
               (click)="changeCategory(tagList[i].id)"
               routerLink="home">
         {{ tag.tagName }}
@@ -35,6 +38,16 @@
 <!--      <button class="nav-item nav-link btn btn-info">Pricing</button>-->
 <!--      <button class="nav-item nav-link disabled" href="#">Disabled</button>-->
         </span>
+
+      <span>
+        <button *ngIf="!editNew" class="btn btn-outline-accent" (click)="editNew = !editNew">Add new tag</button>
+        <span *ngIf="editNew">
+          <input *ngIf="editNew" [(ngModel)]="newTag.tagName">
+          <button class="btn btn-outline-info" (click)="submitNewTag()">Submit</button>
+          <button class="btn btn-outline-danger" (click)="editNew = !editNew">Cancel</button>
+        </span>
+      </span>
+
     </div>
   </div>
 

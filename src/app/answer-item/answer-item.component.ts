@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AnswerModel} from '../models/answerModel';
 import {ConnectionService} from '../services/connection.service';
 import {NotificationService} from '../services/notification.service';
+import {ErrorModel} from '../models/errorModel';
 
 @Component({
   selector: 'app-answer-item',
@@ -24,7 +25,8 @@ export class AnswerItemComponent implements OnInit {
     this.connection.editAnswer(this.answer).subscribe(
       (value: AnswerModel ) => {
         this.notify.showSuccess(value.answer, 'Saved'); },
-        error1 => {this.notify.showWarning('', 'Error'); } );
+      (error1: ErrorModel ) => {
+        this.notify.handleError(error1); } );
   }
 
   deleteAnswer() {
@@ -32,7 +34,8 @@ export class AnswerItemComponent implements OnInit {
       (value: AnswerModel) => {
         this.notify.showWarning('Deleted', value.answer);
         this.changeNotify(); },
-        error1 => {this.notify.showError('', 'Error'); });
+      (error1: ErrorModel ) => {
+        this.notify.handleError(error1); });
   }
 
   changeNotify() {

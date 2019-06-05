@@ -23,12 +23,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -134,5 +133,10 @@
       }
     }
   },
-  "defaultProject": "fiszki"
+  "defaultProject": "fiszki",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

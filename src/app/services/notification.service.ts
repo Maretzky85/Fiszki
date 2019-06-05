@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
+import {ErrorModel} from '../models/errorModel';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,13 @@ export class NotificationService {
 
   showWarning(message, title) {
     this.toastr.warning(message, title, this.options);
+  }
+
+  handleError(error: ErrorModel) {
+    if (error.error.status === 403) {
+      this.toastr.warning('Must be logged', 'Access Denied', this.options);
+    } else {
+      this.toastr.error(error.error.message, error.error.error, this.options);
+    }
   }
 }

@@ -3,6 +3,7 @@ import {QuestionModel} from '../models/questionModel';
 import {AnswerModel} from '../models/answerModel';
 import {ConnectionService} from '../services/connection.service';
 import {NotificationService} from '../services/notification.service';
+import {ErrorModel} from '../models/errorModel';
 
 @Component({
   selector: 'app-question-item',
@@ -36,7 +37,7 @@ export class QuestionItemComponent implements OnInit {
     }
   }
 
-  updateForChange() {
+  update() {
     this.disabled = true;
     this.connection.getQuestions(this.question.id).subscribe(
       (value: QuestionModel ) => {
@@ -56,7 +57,9 @@ export class QuestionItemComponent implements OnInit {
       this.question = value;
       this.disabled = false;
       this.notify.showSuccess(value.title, 'Saved!');
-    }, error1 => this.notify.showError('', 'Error'));
+    }, (error1: ErrorModel ) => {
+        this.notify.handleError(error1); }
+      );
   }
 
   submitAnswer() {
@@ -68,18 +71,18 @@ export class QuestionItemComponent implements OnInit {
       (value: QuestionModel ) => {
         this.hidden = true;
         this.newAnswer = null;
-        console.log(value);
         this.notify.showSuccess(value.title, 'saved');
-        this.updateForChange();
-    }, error1 => {this.notify.showWarning('', 'error'); });
+        this.update();
+    }, (error1: ErrorModel ) => {
+        this.notify.handleError(error1); });
   }
 
   delete() {
-    this.connection.deleteQuestion(this.question.id).subscribe((value: QuestionModel )=> {
+    this.connection.deleteQuestion(this.question.id).subscribe((value: QuestionModel ) => {
       this.notify.showWarning(value.title, 'deleted');
       this.question = null;
-    }, error1 => {
-      this.notify.showError('', 'Error');
+    }, (error1: ErrorModel ) => {
+      this.notify.handleError(error1);
     });
   }
 

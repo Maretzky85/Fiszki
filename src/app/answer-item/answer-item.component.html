@@ -1,23 +1,23 @@
-  <div class="panel panel-primary" *ngIf="answer">
-    <div class="panel-body">
+  <div class="card m-2 border-custom-sides" *ngIf="answer">
 
-      <div><button *ngIf="!editMode" class="btn btn-outline-warning"
+      <div class="card-header d-flex">
+        <button *ngIf="!editMode" class="badge btn btn-warning mr-auto align-self-start"
                    (click)="editMode = !editMode">Edit</button>
 
         <button *ngIf="editMode" (click)="saveEditedAnswer()"
-                class="btn btn-outline-success">Save</button>
+                class="badge btn btn-outline-success mr-auto align-self-start">Save</button>
 
-        <button *ngIf="editMode" class="btn btn-outline-warning"
+        <button *ngIf="editMode" class="badge btn btn-warning ml-auto align-self-end"
                 (click)="editMode = !editMode">Cancel</button>
+
+        <button *ngIf="!editMode" (click)="deleteAnswer()"
+                class="badge btn btn-danger ml-auto align-self-end">Delete</button>
       </div>
 
-      <div *ngIf="editMode" >
-        <textarea [(ngModel)]="answer.answer"></textarea>
+      <div class="card-body m-2 p-2"  *ngIf="editMode" >
+        <textarea class="card-body" [(ngModel)]="answer.answer"></textarea>
       </div>
 
-      <p *ngIf="!editMode">{{ answer.answer }}</p>
+      <div class="pre-wrap text-center p-2" *ngIf="!editMode">{{ answer.answer }}</div>
 
-      <button *ngIf="!editMode" (click)="deleteAnswer()"
-              class="btn btn-outline-danger">Delete</button>
-    </div>
   </div>

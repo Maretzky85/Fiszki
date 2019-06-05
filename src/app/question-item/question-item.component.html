@@ -1,43 +1,78 @@
-<div *ngIf="question">
+<div *ngIf="question" class="mt-5">
 
-
-  <span *ngFor="let tag of question.tags">
-    <span class="badge badge-info"> {{ tag.tagName}} </span>
-  </span>
-  <div class="card">
-    <div>
-      <button *ngIf="!editMode" class="btn btn-outline-warning" (click)="editMode=!editMode">Edit</button>
-      <button *ngIf="!editMode" class="btn btn-outline-danger" (click)="delete()">Delete</button>
+  <div class="d-flex">
+    <div class="mr-auto">
+      <span *ngFor="let tag of question.tags">
+        <span class="badge badge-custom-accent ml-2"> {{ tag.tagName}} </span>
+      </span>
     </div>
-    <div class="card" *ngIf="!editMode">
-      <div class="card-header">
+    <div>
+      <span *ngIf="!editMode" class="badge btn badge-warning mr-2" (click)="editMode=!editMode">Edit</span>
+      <span *ngIf="!editMode" class="badge btn badge-danger mr-2" (click)="delete()">Delete</span>
+    </div>
+  </div>
+
+  <div class="card background-primary-dark">
+
+    <div class="border-custom-accent card" *ngIf="!editMode">
+
+      <div class="background-primary-dark card-header pre-wrap">
         {{ question.title }}
       </div>
-      <div class="card-body">
+      <div class="card-body pre-wrap background-primary-light">
         {{ question.question }}
       </div>
+
+      <div class="d-flex background-primary-light mt-n3">
+        <div class="mr-auto">
+        <span *ngIf="question.answers && question.answers.length > 0">
+        <button class="badge btn btn-outline-accent-secondary m-2"
+                (click)="showAnswer()"
+                *ngIf="hidden">Show answer</button>
+        </span>
+        </div>
+        <button [class.disabled]="disabled"
+                class="badge btn btn-outline-accent m-2"
+                (click)="hasNewAnswer()"
+                *ngIf="!newAnswer">New Answer
+        </button>
+      </div>
+
+      <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
+
+        <div class="container">
+
+          <div class="card  mr-4 mt-2 border-0">
+
+            <div class="card-group flex-column border-0">
+              <app-answer-item *ngFor="let answer of question.answers" [answer]=answer (emitter)="update()">
+              </app-answer-item>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
     <div *ngIf="editMode" class="card">
 
-      <textarea *ngIf="editMode" class="card-header" [(ngModel)]="question.title">
-    </textarea>
+      <input *ngIf="editMode" class="card-header" [(ngModel)]="question.title">
 
       <textarea *ngIf="editMode" class="card-body" [(ngModel)]="question.question">
     </textarea>
 
       <span>
-        <button class="btn btn-outline-success" (click)="submitQuestion()">Save</button>
-        <button class="btn btn-outline-warning" (click)="editMode=!editMode">Cancel</button>
+        <button class="badge btn btn-success" (click)="submitQuestion()">Save</button>
+        <button class="badge btn btn-warning" (click)="editMode=!editMode">Cancel</button>
       </span>
-
 
     </div>
 
-    <button [class.disabled]="disabled" class="btn btn-outline-success" (click)="hasNewAnswer()" *ngIf="!newAnswer">New Answer</button>
 
     <div *ngIf="newAnswer">
-      <div class="jumbotron">
+      <div class="jumbotron background-primary-light">
 
         <form>
 
@@ -52,34 +87,21 @@
             </textarea>
           </div>
 
-          <i (click)="submitAnswer()" type="submit" [class.disabled]="disabled" class="btn btn-primary">Submit</i>
+          <button (click)="submitAnswer()"
+                  type="submit"
+                  [class.disabled]="disabled"
+                  class="badge btn btn-success ml-2">Submit
+          </button>
+
+          <button (click)="newAnswer = null"
+                  [class.disabled]="disabled"
+                  class="badge btn btn-warning ml-4">Cancel
+          </button>
         </form>
       </div>
 
     </div>
 
-    <span *ngIf="question.answers && question.answers.length > 0">
-      <button class="btn btn-info" (click)="showAnswer()" *ngIf="hidden">Answer</button>
-    </span>
-    <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
-
-      <div class="container" >
-
-        <div class="card">
-          <div class="card-header">
-            Answer:
-          </div>
-          <div class="card-body">
-            <app-answer-item *ngFor="let answer of question.answers" [answer] = answer (emitter)="updateForChange()">
-            </app-answer-item>
-          </div>
-        </div>
-
-
-
-      </div>
-
-    </div>
   </div>
 
 
