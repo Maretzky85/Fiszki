@@ -6,8 +6,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AnswerModel } from '../models/answerModel';
 import {Router} from '@angular/router';
 import {NotificationService} from '../services/notification.service';
-import {NavbarTopComponent} from '../navbar-top/navbar-top.component';
 import {ErrorModel} from '../models/errorModel';
+import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-new-question',
@@ -28,6 +28,7 @@ export class NewQuestionComponent implements OnInit {
   constructor(private connection: ConnectionService,
               private formBuilder: FormBuilder,
               private router: Router,
+              private spinner: Ng4LoadingSpinnerService,
               private notify: NotificationService) {
     this.question = new QuestionModel();
     this.answer = new AnswerModel();
@@ -44,6 +45,7 @@ export class NewQuestionComponent implements OnInit {
     this.availableTags.map((o, i) => {
       const control = new FormControl(false);
       (this.form.controls.tags as FormArray).push(control);
+      this.spinner.hide();
     });
   }
 
@@ -64,8 +66,9 @@ export class NewQuestionComponent implements OnInit {
         (value: QuestionModel ) => {
           this.notify.showSuccess(value.title, 'saved');
           this.router.navigate(['/questions/' + value.id]);
+          this.spinner.hide();
         }, (error1: ErrorModel ) => {
-          this.notify.handleError(error1);}
+          this.notify.handleError(error1); }
       );
   }
 

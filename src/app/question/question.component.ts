@@ -54,12 +54,14 @@ ngOnInit() {
       this.connection.getQuestions()
         .subscribe((value: QuestionModel[]) => {
             this.questionList = value;
+            this.notification = 'No questions found'
             this.spinner.hide();
           },
           (error) => this.notify.handleError(error));
     } else {
       this.connection.getQuestionsByTagName(category).subscribe((value: QuestionModel[]) => {
           this.questionList = value;
+          this.notification = 'No questions found'
           this.spinner.hide();
         },
         (error) => this.notify.handleError(error)

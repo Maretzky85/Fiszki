@@ -8,6 +8,7 @@ import {RegisterLoginComponent} from '../register-login/register-login.component
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../services/auth.service';
 import {UserModel} from '../models/UserModel';
+import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-navbar-top',
@@ -33,6 +34,7 @@ export class NavbarTopComponent implements OnInit {
               private categorySharingService: CategoryDataSharingService,
               private notify: NotificationService,
               private modalService: NgbModal,
+              private spinner: Ng4LoadingSpinnerService,
               public authorization: AuthService) {
   }
 
@@ -55,7 +57,7 @@ export class NavbarTopComponent implements OnInit {
           this.notify.showSuccess(value.tagName, 'Saved');
           this.loadTags();
         }, error1 => {
-          this.notify.showError('', 'Error');
+          this.notify.handleError(error1);
         });
   }
 
@@ -63,14 +65,19 @@ export class NavbarTopComponent implements OnInit {
     this.connection.getTags().subscribe(
       (value: QuestionTag[]) => {
         this.tagList = value;
+        this.spinner.hide();
       },
-      (error) => console.error(error)
+      (error) => this.notify.handleError(error)
     );
   }
 
   ngOnInit() {
     this.loadTags();
-    this.authorization.loggedUser.subscribe(user => this.user = user);
+    this.authorization.loggedUser
+      .subscribe(
+        user => {this.user = user;
+        this.spinner.hide(); }
+  );
   }
 
   logout() {

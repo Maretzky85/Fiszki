@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron background-primary-light">
 
   <form>
 
@@ -23,7 +23,7 @@
       </textarea>
     </div>
 
-    <button class="btn btn-outline-success" (click)="hasAnswer = !hasAnswer">With Answer?</button>
+    <button class="btn btn-sm btn-outline-accent" (click)="hasAnswer = !hasAnswer">With Answer?</button>
 
     <div class="form-group" *ngIf="hasAnswer">
       <label for="AnswerBody">Answer</label>
@@ -38,6 +38,7 @@
 
     <form [formGroup]="form">
       <label formArrayName="tags"
+             class="mr-2"
              *ngFor="let tag of form.controls.tags.value;
              let i = index; trackBy: trackByIndex">
         <input type="checkbox" [formControlName]="i">
@@ -47,6 +48,6 @@
 
 
 
-    <i (click)="submit()" type="submit" class="btn btn-primary">Submit</i>
+    <i (click)="submit()" type="submit" class="btn btn-sm btn-outline-accent-secondary">Submit</i>
   </form>
 </div>

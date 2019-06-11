@@ -14,7 +14,6 @@ export class TokenInterceptorService  implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercepted');
     this.spinnerService.show();
     if (this.auth.hasToken()) {
       req = req.clone({
