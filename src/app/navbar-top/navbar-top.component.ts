@@ -55,7 +55,6 @@ export class NavbarTopComponent implements OnInit {
           this.notify.showSuccess(value.tagName, 'Saved');
           this.loadTags();
         }, error1 => {
-          console.log(error1);
           this.notify.showError('', 'Error');
         });
   }

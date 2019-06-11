@@ -17,6 +17,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import {TokenInterceptorService} from './services/token-interceptor.service';
+import {Ng4LoadingSpinnerModule} from 'ng4-loading-spinner';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {TokenInterceptorService} from './services/token-interceptor.service';
     ButtonsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [
     {

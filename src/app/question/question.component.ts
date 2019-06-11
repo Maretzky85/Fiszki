@@ -4,6 +4,7 @@ import { QuestionModel } from '../models/questionModel';
 import {CategoryDataSharingService} from '../services/category-data-sharing.service';
 import {NotificationService} from '../services/notification.service';
 import {ActivatedRoute} from '@angular/router';
+import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-question',
@@ -21,7 +22,8 @@ export class QuestionComponent implements OnInit {
   constructor(private connection: ConnectionService,
               private categorySharingService: CategoryDataSharingService,
               private notify: NotificationService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private spinner: Ng4LoadingSpinnerService) { }
 
 ngOnInit() {
     this.questionId = Number(this.route.snapshot.paramMap.get('id'));
@@ -33,7 +35,7 @@ ngOnInit() {
     } else {
       this.loadAllQuestions(category);
     }
-    }, (error1 => console.log(error1)));
+    }, (error1 => this.notify.handleError(error1)));
   }
 
   loadSingleQuestion(questionId: number) {
@@ -42,7 +44,7 @@ ngOnInit() {
         (value: QuestionModel ) => {
           this.questionList = [];
           this.questionList.push(value);
-          console.log(this.questionList);
+          this.spinner.hide();
         }
       );
   }
@@ -52,13 +54,16 @@ ngOnInit() {
       this.connection.getQuestions()
         .subscribe((value: QuestionModel[]) => {
             this.questionList = value;
+            this.spinner.hide();
           },
-          (error) => console.error(error));
+          (error) => this.notify.handleError(error));
     } else {
       this.connection.getQuestionsByTagName(category).subscribe((value: QuestionModel[]) => {
           this.questionList = value;
+          this.spinner.hide();
         },
-        (error) => console.error(error));
+        (error) => this.notify.handleError(error)
+      );
     }
   }
 

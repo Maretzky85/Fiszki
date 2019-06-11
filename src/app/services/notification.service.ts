@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {ErrorModel} from '../models/errorModel';
+import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService,
+              private spinner: Ng4LoadingSpinnerService) {
   }
 
   options = {
@@ -32,6 +34,7 @@ export class NotificationService {
   }
 
   handleError(error: ErrorModel) {
+    this.spinner.hide();
     if (error.error.status === 403) {
       this.toastr.warning('Must be logged', 'Access Denied', this.options);
     } else {
