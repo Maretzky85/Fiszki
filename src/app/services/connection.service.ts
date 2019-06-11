@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { QuestionModel } from '../models/questionModel';
-import { AnswerModel } from '../models/answerModel';
+import {QuestionModel} from '../models/questionModel';
+import {AnswerModel} from '../models/answerModel';
 import {TagModel} from '../models/tagModel';
-import {UserModel} from '../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnectionService {
-  address = 'http://fiszkiapi.sikoramarek.com/';
+  // address = 'http://fiszkiapi.sikoramarek.com/';
+  address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {
+  }
 
   getQuestions(question_id?: number) {
     if (question_id) {
@@ -20,22 +21,6 @@ export class ConnectionService {
     } else {
       return this.http.get(this.address + 'questions');
     }
-  }
-
-
-  login(user: UserModel) {
-    return this.http
-      .post(
-        this.address + 'login',
-        JSON.stringify(user),
-        {headers: this.headers, observe: 'response'});
-  }
-
-  register(user: UserModel) {
-    return this.http
-      .post(this.address + 'users',
-        JSON.stringify(user),
-        {headers: this.headers, observe: 'response'});
   }
 
   getTags() {
@@ -84,10 +69,10 @@ export class ConnectionService {
   deleteQuestion(questionID: number) {
     return this.http
       .delete(
-      this.address
-      + 'questions/'
-      + questionID,
-      {headers: this.headers});
+        this.address
+        + 'questions/'
+        + questionID,
+        {headers: this.headers});
   }
 
   deleteAnswer(answerID: number) {
@@ -108,8 +93,8 @@ export class ConnectionService {
   editAnswer(answer: AnswerModel) {
     console.log(answer);
     return this.http.put(this.address
-    + 'answers/'
-    + answer.id,
+      + 'answers/'
+      + answer.id,
       JSON.stringify(answer),
       {headers: this.headers});
   }

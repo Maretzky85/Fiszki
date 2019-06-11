@@ -1,0 +1,117 @@
+$primary-dark: #EDC7B7;
+$primary: #BAB2B5;
+$primary-light: #EEE2DC;
+$accent: #123C69;
+$accent-transparent: rgba(18, 60, 105, .5);
+$accent-secondary: #AC3B61;
+$accent-secondary-transparent: rgba(172, 59, 97, .5);
+$color-text: #FFF;
+
+.background-primary-dark{
+  background-color: $primary-dark;
+}
+
+.background-primary-light{
+  background-color: $primary-light;
+  color: #000000;
+}
+
+.background-primary{
+  background-color: $primary;
+  color: #000000;
+}
+
+.color-accent{
+  color: $accent;
+}
+
+.color-accent-secondary{
+  color: $accent-secondary;
+}
+
+.color-primary-text{
+  color: #212121;
+}
+
+.color-secondary-text{
+  color: #757575;
+}
+
+.color-text{
+  color: #FFFFFF;
+}
+
+.card {
+  background-color: $primary-light;
+}
+
+.border-custom-accent{
+  border-color: $accent;
+  border-width: 1px;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-radius: 0;
+}
+
+.badge-custom-accent{
+  color: $color-text;
+  background-color: $accent-secondary;
+}
+
+.border-custom-sides{
+  border-width: 1px;
+  border-color: $accent-secondary;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-radius: 0;
+}
+
+.btn-accent{color:$color-text;background-color:$accent-secondary;border-color:$accent}
+.btn-accent:hover{color:#fff;background-color:$accent;border-color:$accent-secondary}
+.btn-accent.focus,.btn-info:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+.btn-accent.disabled,.btn-info:disabled{color:$color-text;background-color:$accent-secondary;border-color:$accent}
+.btn-accent:not(:disabled):not(.disabled).active,
+.btn-accent:not(:disabled):not(.disabled):active,.show>
+.btn-accent.dropdown-toggle{color:$color-text;background-color:$accent;border-color:$accent-secondary}
+.btn-accent:not(:disabled):not(.disabled).active:focus,
+.btn-accent:not(:disabled):not(.disabled):active:focus,.show>
+.btn-accent.dropdown-toggle:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+
+
+.btn-outline-accent{color:$accent-secondary;border-color:$accent}
+.btn-outline-accent:hover{color:$color-text;background-color:$accent-secondary;border-color:$accent}
+.btn-outline-accent.focus,
+.btn-outline-accent:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+.btn-outline-accent.disabled,
+.btn-outline-accent:disabled{color:$accent;background-color:transparent}
+.btn-outline-accent:not(:disabled):not(.disabled).active,
+.btn-outline-accent:not(:disabled):not(.disabled):active,.show>
+.btn-outline-accent.dropdown-toggle{color:$color-text;background-color:#AC3B61;border-color:#123C69}
+.btn-outline-accent:not(:disabled):not(.disabled).active:focus,
+.btn-outline-accent:not(:disabled):not(.disabled):active:focus,.show>
+.btn-outline-accent.dropdown-toggle:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+
+.btn-accent-secondary{color:$color-text;background-color:$accent;border-color:$primary-dark}
+.btn-accent-secondary:hover{color:$color-text;background-color:$accent-secondary;border-color:$accent}
+.btn-accent-secondary.focus,.btn-info:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+.btn-accent-secondary.disabled,.btn-info:disabled{color:$color-text;background-color:$accent-secondary;border-color:$accent-secondary}
+.btn-accent-secondary:not(:disabled):not(.disabled).active,
+.btn-accent-secondary:not(:disabled):not(.disabled):active,.show>
+.btn-accent-secondary.dropdown-toggle{color:$color-text;background-color:$accent;border-color:$accent}
+.btn-accent-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-accent-secondary:not(:disabled):not(.disabled):active:focus,.show>
+.btn-accent-secondary.dropdown-toggle:focus{box-shadow:0 0 0 .2rem rgba(58,176,195,.5)}
+
+
+.btn-outline-accent-secondary{color:$accent;border-color:$accent-secondary}
+.btn-outline-accent-secondary:hover{color:$color-text;background-color:$accent;border-color:$accent-secondary}
+.btn-outline-accent-secondary.focus,
+.btn-outline-accent-secondary:focus{box-shadow:0 0 0 .2rem $accent-transparent}
+.btn-outline-accent-secondary.disabled,
+.btn-outline-accent-secondary:disabled{color:$accent;background-color:transparent}
+.btn-outline-accent-secondary:not(:disabled):not(.disabled).active,
+.btn-outline-accent-secondary:not(:disabled):not(.disabled):active,.show>
+.btn-outline-accent-secondary.dropdown-toggle{color:$color-text;background-color:#AC3B61;border-color:#123C69}
+.btn-outline-accent-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-outline-accent-secondary:not(:disabled):not(.disabled):active:focus,.show>
+.btn-outline-accent-secondary.dropdown-toggle:focus{box-shadow:0 0 0 .2rem $accent-transparent}

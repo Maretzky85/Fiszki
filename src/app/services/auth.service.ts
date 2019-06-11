@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Observer} from 'rxjs';
-import {ConnectionService} from './connection.service';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 import {UserModel} from '../models/UserModel';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {tap} from 'rxjs/operators';
+import {DataSharingService} from './data-sharing.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,51 +12,55 @@ export class AuthService {
 
   token;
 
-  user = new BehaviorSubject(undefined);
-  loggedUser = this.user.asObservable();
+  address = 'http://localhost:8080/';
+  headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
-  constructor(private connection: ConnectionService) {
+  constructor(private http: HttpClient,
+              private dataSharing: DataSharingService) {
   }
 
-  logOut () {
+  logOut() {
     this.token = undefined;
-    this.user.next(undefined);
+    this.dataSharing.changeUser(undefined);
   }
 
   register(user: UserModel) {
-    return new Observable(
-      (observer) => {
-        this.connection.register(user).subscribe(
-          value => {
-            this.token = value.headers.get('Authorization');
-            observer.next(user);
-            this.user.next(user);
-            observer.complete();
-          },
-          error1 => {
-            observer.error(error1);
-            observer.complete();
+    return this.http
+      .post(this.address + 'users',
+        JSON.stringify(user),
+        {headers: this.headers, observe: 'response'})
+      .pipe(
+        tap(
+          x => {
+            if (x instanceof HttpResponse) {
+              this.token = x.headers.get('Authorization');
+              user.password = undefined;
+              this.dataSharing.changeUser(user);
+            }
           }
-        );
-      }
-    );
+        ));
   }
 
   login(user: UserModel) {
-    return new Observable((observer) => {
-      this.connection.login(user).subscribe(value => {
-        this.token = value.headers.get('Authorization');
-        this.user.next(user);
-        observer.next(user);
-        observer.complete();
-      }, error1 => {
-        observer.error(error1);
-        observer.complete();
-      });
-    });
+    return this.http
+      .post(
+        this.address + 'login',
+        JSON.stringify(user),
+        {headers: this.headers, observe: 'response'}).pipe(
+        tap(
+          x => {
+            if (x instanceof HttpResponse) {
+              this.token = x.headers.get('Authorization');
+              user.password = undefined;
+              this.dataSharing.changeUser(user);
+            }
+          }
+        ))
+      ;
   }
 
-  hasToken (): boolean {
+
+  hasToken(): boolean {
     return !!this.token;
   }
 

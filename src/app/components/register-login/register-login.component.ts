@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ConnectionService} from '../services/connection.service';
+import {ConnectionService} from '../../services/connection.service';
 import {FormControl, Validators} from '@angular/forms';
-import {UserModel} from '../models/UserModel';
+import {UserModel} from '../../models/UserModel';
 import {HttpErrorResponse} from '@angular/common/http';
-import {NotificationService} from '../services/notification.service';
-import {AuthService} from '../services/auth.service';
+import {NotificationService} from '../../services/notification.service';
+import {AuthService} from '../../services/auth.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-register-login',
@@ -33,8 +34,8 @@ export class RegisterLoginComponent implements OnInit {
   register() {
     this.auth.register(this.user)
       .subscribe(
-        (user: UserModel ) => {
-          this.notify.showSuccess('Welcome ' + user.name, 'Logged in');
+        resp => {
+          this.notify.showSuccess('Welcome ' + this.user.name, 'Logged in');
           this.activeModal.close();
         },
         error1 => {
@@ -47,8 +48,8 @@ export class RegisterLoginComponent implements OnInit {
   login() {
     this.auth.login(this.user)
       .subscribe(
-        (user: UserModel ) => {
-          this.notify.showSuccess('Welcome ' + user.name, 'Logged in');
+        resp => {
+          this.notify.showSuccess('Welcome ' + this.user.name, 'Logged in');
           this.activeModal.close();
           },
           () => {

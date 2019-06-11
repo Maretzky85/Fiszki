@@ -1,14 +1,13 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {ConnectionService} from '../services/connection.service';
-import {QuestionTag} from '../models/responseInterface';
-import {CategoryDataSharingService} from '../services/category-data-sharing.service';
-import {TagModel} from '../models/tagModel';
-import {NotificationService} from '../services/notification.service';
+import {ConnectionService} from '../../services/connection.service';
+import {QuestionTag} from '../../models/responseInterface';
+import {DataSharingService} from '../../services/data-sharing.service';
+import {TagModel} from '../../models/tagModel';
+import {NotificationService} from '../../services/notification.service';
 import {RegisterLoginComponent} from '../register-login/register-login.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AuthService} from '../services/auth.service';
-import {UserModel} from '../models/UserModel';
-import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
+import {AuthService} from '../../services/auth.service';
+import {UserModel} from '../../models/UserModel';
 
 @Component({
   selector: 'app-navbar-top',
@@ -31,21 +30,20 @@ export class NavbarTopComponent implements OnInit {
   LOGIN = 1;
 
   constructor(private connection: ConnectionService,
-              private categorySharingService: CategoryDataSharingService,
+              private categorySharingService: DataSharingService,
               private notify: NotificationService,
               private modalService: NgbModal,
-              private spinner: Ng4LoadingSpinnerService,
-              public authorization: AuthService) {
+              private dataSharing: DataSharingService,
+              private authorization: AuthService) {
   }
 
   openModal(mode: number) {
     const modalRef = this.modalService.open(RegisterLoginComponent, {size: 'lg', centered: true});
-    modalRef.componentInstance.name = 'World';
     modalRef.componentInstance.mode = mode;
   }
 
   changeCategory(category: number) {
-    this.categorySharingService.changeMessage(category);
+    this.categorySharingService.changeCategory(category);
   }
 
   submitNewTag() {
@@ -65,7 +63,7 @@ export class NavbarTopComponent implements OnInit {
     this.connection.getTags().subscribe(
       (value: QuestionTag[]) => {
         this.tagList = value;
-        this.spinner.hide();
+        this.dataSharing.changeTagsAvailable(value);
       },
       (error) => this.notify.handleError(error)
     );
@@ -73,10 +71,9 @@ export class NavbarTopComponent implements OnInit {
 
   ngOnInit() {
     this.loadTags();
-    this.authorization.loggedUser
+    this.dataSharing.currentUser
       .subscribe(
-        user => {this.user = user;
-        this.spinner.hide(); }
+        user => this.user = user
   );
   }
 

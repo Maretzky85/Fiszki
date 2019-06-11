@@ -1,21 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {ErrorModel} from '../models/errorModel';
-import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor(private toastr: ToastrService,
-              private spinner: Ng4LoadingSpinnerService) {
+  constructor(private toastr: ToastrService) {
   }
 
   options = {
     positionClass: 'toast-bottom-center',
     progressBar: true,
-    timeOut: 1500};
+    timeOut: 1500
+  };
 
   showSuccess(message, title) {
     this.toastr.success(message, title, this.options);
@@ -33,12 +32,11 @@ export class NotificationService {
     this.toastr.warning(message, title, this.options);
   }
 
-  handleError(error: ErrorModel) {
-    this.spinner.hide();
-    if (error.error.status === 403) {
-      this.toastr.warning('Must be logged', 'Access Denied', this.options);
+  handleError(error: HttpErrorResponse) {
+    if (error.status === 403) {
+      this.toastr.warning('', 'Access Denied', this.options);
     } else {
-      this.toastr.error(error.error.message, error.error.error, this.options);
+      this.toastr.error(error.message, error.error, this.options);
     }
   }
 }

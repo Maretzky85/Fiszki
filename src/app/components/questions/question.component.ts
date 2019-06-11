@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {ConnectionService} from '../services/connection.service';
-import { QuestionModel } from '../models/questionModel';
-import {CategoryDataSharingService} from '../services/category-data-sharing.service';
-import {NotificationService} from '../services/notification.service';
+import {Component, OnInit} from '@angular/core';
+import {ConnectionService} from '../../services/connection.service';
+import {QuestionModel} from '../../models/questionModel';
+import {DataSharingService} from '../../services/data-sharing.service';
+import {NotificationService} from '../../services/notification.service';
 import {ActivatedRoute} from '@angular/router';
-import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-question',
@@ -20,31 +19,30 @@ export class QuestionComponent implements OnInit {
   notification = 'loading';
 
   constructor(private connection: ConnectionService,
-              private categorySharingService: CategoryDataSharingService,
+              private categorySharingService: DataSharingService,
               private notify: NotificationService,
-              private route: ActivatedRoute,
-              private spinner: Ng4LoadingSpinnerService) { }
+              private route: ActivatedRoute) {
+  }
 
-ngOnInit() {
+  ngOnInit() {
     this.questionId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.categorySharingService.currentMessage.subscribe((category) => {
-    if (this.questionId) {
-      this.loadSingleQuestion(this.questionId);
-      delete this.questionId;
-    } else {
-      this.loadAllQuestions(category);
-    }
+    this.categorySharingService.currentCategory.subscribe((category) => {
+      if (this.questionId) {
+        this.loadSingleQuestion(this.questionId);
+        delete this.questionId;
+      } else {
+        this.loadAllQuestions(category);
+      }
     }, (error1 => this.notify.handleError(error1)));
   }
 
   loadSingleQuestion(questionId: number) {
     this.connection.getQuestions(questionId)
       .subscribe(
-        (value: QuestionModel ) => {
+        (value: QuestionModel) => {
           this.questionList = [];
           this.questionList.push(value);
-          this.spinner.hide();
         }
       );
   }
@@ -54,15 +52,13 @@ ngOnInit() {
       this.connection.getQuestions()
         .subscribe((value: QuestionModel[]) => {
             this.questionList = value;
-            this.notification = 'No questions found'
-            this.spinner.hide();
+            this.notification = 'No questions found';
           },
           (error) => this.notify.handleError(error));
     } else {
       this.connection.getQuestionsByTagName(category).subscribe((value: QuestionModel[]) => {
           this.questionList = value;
-          this.notification = 'No questions found'
-          this.spinner.hide();
+          this.notification = 'No questions found';
         },
         (error) => this.notify.handleError(error)
       );
