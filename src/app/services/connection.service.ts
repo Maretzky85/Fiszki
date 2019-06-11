@@ -10,7 +10,6 @@ import {UserModel} from '../models/UserModel';
 })
 export class ConnectionService {
   address = 'http://fiszkiapi.sikoramarek.com/';
-  // address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(public http: HttpClient) { }
