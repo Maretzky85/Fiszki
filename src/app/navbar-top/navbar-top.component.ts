@@ -4,6 +4,10 @@ import {QuestionTag} from '../models/responseInterface';
 import {CategoryDataSharingService} from '../services/category-data-sharing.service';
 import {TagModel} from '../models/tagModel';
 import {NotificationService} from '../services/notification.service';
+import {RegisterLoginComponent} from '../register-login/register-login.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from '../services/auth.service';
+import {UserModel} from '../models/UserModel';
 
 @Component({
   selector: 'app-navbar-top',
@@ -20,9 +24,22 @@ export class NavbarTopComponent implements OnInit {
 
   newTag = new TagModel();
 
+  user: UserModel;
+
+  REGISTER = 0;
+  LOGIN = 1;
+
   constructor(private connection: ConnectionService,
               private categorySharingService: CategoryDataSharingService,
-              private notify: NotificationService) {
+              private notify: NotificationService,
+              private modalService: NgbModal,
+              public authorization: AuthService) {
+  }
+
+  openModal(mode: number) {
+    const modalRef = this.modalService.open(RegisterLoginComponent, {size: 'lg', centered: true});
+    modalRef.componentInstance.name = 'World';
+    modalRef.componentInstance.mode = mode;
   }
 
   changeCategory(category: number) {
@@ -54,5 +71,10 @@ export class NavbarTopComponent implements OnInit {
 
   ngOnInit() {
     this.loadTags();
+    this.authorization.loggedUser.subscribe(user => this.user = user);
+  }
+
+  logout() {
+    this.authorization.logOut();
   }
 }

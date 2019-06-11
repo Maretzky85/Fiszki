@@ -1,7 +1,7 @@
   <div class="card m-2 border-custom-sides" *ngIf="answer">
 
       <div class="card-header d-flex">
-        <button *ngIf="!editMode" class="badge btn btn-warning mr-auto align-self-start"
+        <button *ngIf="!editMode && user" class="badge btn btn-warning mr-auto align-self-start"
                    (click)="editMode = !editMode">Edit</button>
 
         <button *ngIf="editMode" (click)="saveEditedAnswer()"
@@ -10,7 +10,7 @@
         <button *ngIf="editMode" class="badge btn btn-warning ml-auto align-self-end"
                 (click)="editMode = !editMode">Cancel</button>
 
-        <button *ngIf="!editMode" (click)="deleteAnswer()"
+        <button *ngIf="!editMode && user" (click)="deleteAnswer()"
                 class="badge btn btn-danger ml-auto align-self-end">Delete</button>
       </div>
 

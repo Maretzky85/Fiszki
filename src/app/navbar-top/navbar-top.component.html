@@ -17,7 +17,7 @@
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <button class="nav-item nav-link active btn btn-outline-accent color-text mr-1"
+      <button *ngIf="user" class="nav-item nav-link active btn btn-outline-accent color-text mr-1"
               routerLink="newQuestion">
         New Question
         <span class="sr-only">(current)</span></button>
@@ -51,4 +51,12 @@
     </div>
   </div>
 
+  <div *ngIf="user">
+    {{ user.name }}
+    <button class="btn btn-lg btn-outline-primary" (click)="logout()">Log Out</button>
+  </div>
+  <div *ngIf="!user">
+    <button class="btn btn-lg btn-outline-primary" (click)="openModal(REGISTER)">Register</button>
+    <button class="btn btn-lg btn-outline-primary" (click)="openModal(LOGIN)">Login</button>
+  </div>
 </nav>

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { QuestionComponent } from './question/question.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { QuestionItemComponent } from './question-item/question-item.component';
 import { AnswerItemComponent } from './answer-item/answer-item.component';
 
@@ -15,6 +15,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonsModule} from 'ngx-bootstrap';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RegisterLoginComponent } from './register-login/register-login.component';
+import {TokenInterceptorService} from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AnswerItemComponent,
     NavbarTopComponent,
     NewQuestionComponent,
+    RegisterLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [RegisterLoginComponent]
 })
 export class AppModule { }

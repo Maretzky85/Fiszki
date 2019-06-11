@@ -6,7 +6,7 @@
         <span class="badge badge-custom-accent ml-2"> {{ tag.tagName}} </span>
       </span>
     </div>
-    <div>
+    <div *ngIf="user">
       <span *ngIf="!editMode" class="badge btn badge-warning mr-2" (click)="editMode=!editMode">Edit</span>
       <span *ngIf="!editMode" class="badge btn badge-danger mr-2" (click)="delete()">Delete</span>
     </div>
@@ -34,7 +34,7 @@
         <button [class.disabled]="disabled"
                 class="badge btn btn-outline-accent m-2"
                 (click)="hasNewAnswer()"
-                *ngIf="!newAnswer">New Answer
+                *ngIf="!newAnswer && user">New Answer
         </button>
       </div>
 

@@ -2,7 +2,7 @@
   <div class="jumbotron background-primary">
     <div class="card" *ngIf="questionList.length < 1">
       <div class="card-header">
-        No Questions Found
+        {{ notification }}
       </div>
     </div>
     <app-question-item *ngFor="let question of questionList" [question]="question"></app-question-item>

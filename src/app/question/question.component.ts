@@ -16,6 +16,8 @@ export class QuestionComponent implements OnInit {
 
   questionId: number;
 
+  notification = 'loading';
+
   constructor(private connection: ConnectionService,
               private categorySharingService: CategoryDataSharingService,
               private notify: NotificationService,

@@ -3,6 +3,7 @@ import {AnswerModel} from '../models/answerModel';
 import {ConnectionService} from '../services/connection.service';
 import {NotificationService} from '../services/notification.service';
 import {ErrorModel} from '../models/errorModel';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-answer-item',
@@ -17,7 +18,10 @@ export class AnswerItemComponent implements OnInit {
 
   editMode = false;
 
+  user;
+
   constructor(private connection: ConnectionService,
+              private authorization: AuthService,
               private notify: NotificationService) { }
 
   saveEditedAnswer() {
@@ -43,6 +47,7 @@ export class AnswerItemComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authorization.loggedUser.subscribe(user => this.user = user);
   }
 
 }

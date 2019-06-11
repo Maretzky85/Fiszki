@@ -4,6 +4,7 @@ import {AnswerModel} from '../models/answerModel';
 import {ConnectionService} from '../services/connection.service';
 import {NotificationService} from '../services/notification.service';
 import {ErrorModel} from '../models/errorModel';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-question-item',
@@ -22,14 +23,19 @@ export class QuestionItemComponent implements OnInit {
 
   newAnswer: AnswerModel;
 
+  user;
+
   constructor(private connection: ConnectionService,
+              private authorization: AuthService,
               private notify: NotificationService) { }
 
   showAnswer() {
     this.hidden = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authorization.loggedUser.subscribe(user => this.user = user);
+  }
 
   hasNewAnswer() {
     if (!this.disabled) {
