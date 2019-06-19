@@ -42,9 +42,11 @@ export class QuestionItemComponent implements OnInit {
 
   update() {
     this.connection.getQuestions(this.question.id).subscribe(
-      (value: QuestionModel) => {
-        this.question = value;
+      (value: QuestionModel[]) => {
+        console.log(value);
+        this.question = value[0];
       });
+    this.hidden = false;
   }
 
   submitQuestion() {

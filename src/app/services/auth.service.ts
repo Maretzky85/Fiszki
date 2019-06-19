@@ -11,8 +11,8 @@ export class AuthService {
 
   token;
 
-  // address = 'http://fiszkiapi.sikoramarek.com/';
-  address = 'http://localhost:8080/';
+  address = 'http://fiszkiapi.sikoramarek.com/';
+  // address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(private http: HttpClient,

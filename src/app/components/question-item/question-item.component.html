@@ -31,7 +31,7 @@
                 *ngIf="hidden">Show answer</button>
         </span>
         </div>
-        <button [class.disabled]="disabled"
+        <button
                 class="badge btn btn-outline-accent m-2"
                 (click)="hasNewAnswer()"
                 *ngIf="!newAnswer && logged">New Answer
@@ -89,12 +89,10 @@
 
           <button (click)="submitAnswer()"
                   type="submit"
-                  [class.disabled]="disabled"
                   class="badge btn btn-success ml-2">Submit
           </button>
 
           <button (click)="newAnswer = null"
-                  [class.disabled]="disabled"
                   class="badge btn btn-warning ml-4">Cancel
           </button>
         </form>
