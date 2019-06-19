@@ -18,6 +18,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterLoginComponent} from './components/register-login/register-login.component';
 import {InterceptorService} from './services/interceptor.service';
 import {Ng4LoadingSpinnerModule} from 'ng4-loading-spinner';
+import {LoadingBarModule} from '@ngx-loading-bar/core';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {Ng4LoadingSpinnerModule} from 'ng4-loading-spinner';
     AnswerItemComponent,
     NavbarTopComponent,
     NewQuestionComponent,
-    RegisterLoginComponent,
+    RegisterLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,8 @@ import {Ng4LoadingSpinnerModule} from 'ng4-loading-spinner';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+    LoadingBarModule
   ],
   providers: [
     {

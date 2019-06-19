@@ -5,7 +5,7 @@ import {DataSharingService} from '../../services/data-sharing.service';
 import {TagModel} from '../../models/tagModel';
 import {NotificationService} from '../../services/notification.service';
 import {RegisterLoginComponent} from '../register-login/register-login.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdownConfig, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../../services/auth.service';
 import {UserModel} from '../../models/UserModel';
 
@@ -30,11 +30,12 @@ export class NavbarTopComponent implements OnInit {
   LOGIN = 1;
 
   constructor(private connection: ConnectionService,
-              private categorySharingService: DataSharingService,
+              private dataSharingService: DataSharingService,
               private notify: NotificationService,
               private modalService: NgbModal,
               private dataSharing: DataSharingService,
-              private authorization: AuthService) {
+              private authorization: AuthService,
+              private dropdownConfig: NgbDropdownConfig) {
   }
 
   openModal(mode: number) {
@@ -43,7 +44,7 @@ export class NavbarTopComponent implements OnInit {
   }
 
   changeCategory(category: number) {
-    this.categorySharingService.changeCategory(category);
+    this.dataSharingService.changeCategory(category);
   }
 
   submitNewTag() {
@@ -70,6 +71,7 @@ export class NavbarTopComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dropdownConfig.autoClose = true;
     this.loadTags();
     this.dataSharing.currentUser
       .subscribe(

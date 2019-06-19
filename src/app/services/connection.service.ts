@@ -17,9 +17,9 @@ export class ConnectionService {
 
   getQuestions(question_id?: number) {
     if (question_id) {
-      return this.http.get(this.address + 'questions/' + question_id);
+      return this.http.get(this.address + 'questions/' + question_id, {headers: this.headers});
     } else {
-      return this.http.get(this.address + 'questions');
+      return this.http.get(this.address + 'questions/random', {headers: this.headers});
     }
   }
 
@@ -29,13 +29,13 @@ export class ConnectionService {
         this.address + 'tags');
   }
 
-  getQuestionsByTagName(tagId: number) {
+  getQuestionsByTagId(tagId: number) {
     return this.http
       .get(
         this.address
         + 'tags/'
         + tagId
-        + '/questions',
+        + '/questions/random',
         {headers: this.headers});
   }
 
@@ -97,5 +97,12 @@ export class ConnectionService {
       + answer.id,
       JSON.stringify(answer),
       {headers: this.headers});
+  }
+
+  getAllQuestions(inputParams?) {
+    return this.http.get(this.address +
+      'questions/',
+      {headers: this.headers,
+        params: inputParams ? inputParams : null});
   }
 }

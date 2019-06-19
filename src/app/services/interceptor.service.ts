@@ -5,6 +5,7 @@ import {AuthService} from './auth.service';
 import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 import {catchError, tap} from 'rxjs/operators';
 import {NotificationService} from './notification.service';
+import {LoadingBarService} from '@ngx-loading-bar/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor(public auth: AuthService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private notify: NotificationService) {
+              private notify: NotificationService,
+              private loadingBar: LoadingBarService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinnerService.show();
+    this.loadingBar.start();
     if (req instanceof HttpRequest) {
       req = this.addAuthorizationToken(req);
     }
@@ -26,9 +29,11 @@ export class InterceptorService implements HttpInterceptor {
         tap(evt => {
           if (evt instanceof HttpResponse) {
             this.spinnerService.hide();
+            this.loadingBar.complete();
           }
         }), catchError((err: any) => {
           this.spinnerService.hide();
+          this.loadingBar.complete();
           this.handleError(err);
           return of(err);
         }));

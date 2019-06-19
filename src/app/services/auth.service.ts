@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
 import {UserModel} from '../models/UserModel';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
@@ -12,6 +11,7 @@ export class AuthService {
 
   token;
 
+  // address = 'http://fiszkiapi.sikoramarek.com/';
   address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 

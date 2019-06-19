@@ -5,8 +5,12 @@ import {NewQuestionComponent} from './components/new-question/new-question.compo
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: QuestionComponent
+  },
+  {
+    path: 'admin',
+    component: QuestionComponent,
   },
   {
     path: 'questions/:id',
@@ -18,12 +22,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/home',
+    redirectTo: '',
     pathMatch: 'full'
   }
 ];

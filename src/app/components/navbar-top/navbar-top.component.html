@@ -3,61 +3,73 @@
     {{ title }}
   </span>
 
-  <button class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
+  <div class="d-inline-block" ngbDropdown>
+    <button class="btn btn-outline-accent" id="categoryDropdown" ngbDropdownToggle>Categories</button>
+    <div aria-labelledby="categoryDropdown" ngbDropdownMenu>
+      <button *ngIf="user"
+              class="dropdown-item"
+              routerLink="newQuestion">
+        New Question
+      </button>
+      <button (click)="changeCategory(0)"
+              class="dropdown-item" routerLink="home">
+        All
+      </button>
+      <div *ngFor="let tag of tagList; let i = index">
+        <button (click)="changeCategory(tagList[i].id)"
+                class="dropdown-item"
+                routerLink="home">
+          {{ tag.tagName }}
+        </button>
+      </div>
+    </div>
+  </div>
 
-    <span class="navbar-toggler-icon"></span>
 
-  </button>
+  <div *ngIf="user" class="d-inline-block" ngbDropdown>
+    <button class="btn btn-outline-accent" id="addDropdown" ngbDropdownToggle>Add...</button>
+    <div aria-labelledby="addDropdown" ngbDropdownMenu>
+      <button *ngIf="user"
+              class="dropdown-item"
+              routerLink="newQuestion">
+        New Question
+      </button>
+      <button (click)="editNew = !editNew" class="dropdown-item">Add new category</button>
+    </div>
+  </div>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <button *ngIf="user"
-              class="nav-item nav-link active btn btn-sm btn-outline-accent color-text mr-1"
-              routerLink="newQuestion">
-        New Question
-        <span class="sr-only">(current)</span></button>
 
-      <button class="nav-item nav-link btn btn-sm btn-outline-accent mr-1"
-              routerLink="home" (click)="changeCategory(0)">
-        All
-        <span class="sr-only">(current)</span></button>
-
-      <span *ngFor="let tag of tagList; let i = index">
-      <button class="nav-item nav-link active btn btn-sm btn-outline-accent mr-1"
-              (click)="changeCategory(tagList[i].id)"
-              routerLink="home">
-        {{ tag.tagName }}
-        <span class="sr-only">(current)</span></button>
-<!--      <button class="nav-item nav-link active btn btn-info">Home <span class="sr-only">(current)</span></button>-->
-<!--      <button class="nav-item nav-link btn btn-info">Features</button>-->
-<!--      <button class="nav-item nav-link btn btn-info">Pricing</button>-->
-<!--      <button class="nav-item nav-link disabled" href="#">Disabled</button>-->
-        </span>
-
-      <span>
-        <button *ngIf="!editNew" class="btn btn-sm btn-outline-accent" (click)="editNew = !editNew">Add new tag</button>
         <span *ngIf="editNew">
           <input *ngIf="editNew" [(ngModel)]="newTag.tagName">
-          <button class="btn btn-sm btn-outline-accent" (click)="submitNewTag()">Submit</button>
-          <button class="btn btn-sm btn-outline-accent-secondary" (click)="editNew = !editNew">Cancel</button>
+          <button (click)="submitNewTag()" class="btn btn-sm btn-outline-accent">Submit</button>
+          <button (click)="editNew = !editNew" class="btn btn-sm btn-outline-accent-secondary">Cancel</button>
         </span>
-      </span>
 
     </div>
   </div>
 
   <div *ngIf="user">
-    {{ user.name }}
-    <button class="btn btn-sm btn-outline-accent-secondary" (click)="logout()">Log Out</button>
+    <div class="d-inline-block" ngbDropdown>
+      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ user.name }}</button>
+      <div aria-labelledby="userDropdown" ngbDropdownMenu>
+        <button
+          class="dropdown-item"
+          routerLink="admin">
+          Show All
+        </button>
+        <button
+          (click)="logout()"
+          class="dropdown-item">Log Out
+        </button>
+
+      </div>
+    </div>
+
   </div>
   <div *ngIf="!user">
-    <button class="btn btn-sm btn-outline-accent-secondary mr-2" (click)="openModal(REGISTER)">Register</button>
-    <button class="btn btn-sm btn-outline-accent-secondary" (click)="openModal(LOGIN)">Login</button>
+    <button (click)="openModal(REGISTER)" class="btn btn-sm btn-outline-accent-secondary mr-2">Register</button>
+    <button (click)="openModal(LOGIN)" class="btn btn-sm btn-outline-accent-secondary">Login</button>
   </div>
 </nav>

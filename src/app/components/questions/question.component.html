@@ -1,5 +1,10 @@
 <div class="container">
   <div class="jumbotron background-primary">
+    <div class="justify-content-end d-flex">
+      <button *ngIf="!admin" class="btn btn-outline-accent-secondary ml-auto" (click)="loadNext()">next</button>
+      <button *ngIf="admin && logged" class="btn btn-outline-accent-secondary mr-auto" (click)="loadAllPrev()">prev</button>
+      <button *ngIf="admin && logged" class="btn btn-outline-accent-secondary ml-auto" (click)="loadAllNext()">next</button>
+    </div>
     <div class="card" *ngIf="questionList.length < 1">
       <div class="card-header">
         {{ notification }}
