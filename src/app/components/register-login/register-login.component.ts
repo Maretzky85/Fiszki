@@ -35,7 +35,7 @@ export class RegisterLoginComponent implements OnInit {
     this.auth.register(this.user)
       .subscribe(
         resp => {
-          this.notify.showSuccess('Welcome ' + this.user.name, 'Logged in');
+          this.notify.showSuccess('Welcome ' + this.user.username, 'Logged in');
           this.activeModal.close();
         },
         error1 => {
@@ -49,7 +49,7 @@ export class RegisterLoginComponent implements OnInit {
     this.auth.login(this.user)
       .subscribe(
         resp => {
-          this.notify.showSuccess('Welcome ' + this.user.name, 'Logged in');
+          this.notify.showSuccess('Welcome ' + this.user.username, 'Logged in');
           this.activeModal.close();
           },
           () => {
