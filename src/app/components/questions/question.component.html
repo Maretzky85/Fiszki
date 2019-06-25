@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')">
   <div class="jumbotron background-primary">
     <div class="d-block d-md-none mt-4"></div>
     <div class="row">
