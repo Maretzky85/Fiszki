@@ -1,11 +1,16 @@
 <div class="container">
   <div class="jumbotron background-primary">
-    <div class="justify-content-end d-flex">
-      <button *ngIf="!admin" class="btn btn-outline-accent-secondary ml-auto" (click)="loadNext()">next</button>
-      <button *ngIf="admin && logged" class="btn btn-outline-accent-secondary mr-auto" (click)="loadAllPrev()">prev</button>
-      <button *ngIf="admin && logged" class="btn btn-outline-accent-secondary ml-auto" (click)="loadAllNext()">next</button>
+    <div class="d-block d-md-none mt-4"></div>
+    <div class="row">
+      <div class="col">
+        <button (click)="loadNext()" *ngIf="!admin" class="btn btn-outline-accent-secondary float-right">next</button>
+        <button (click)="loadAllPrev()" *ngIf="admin && logged" class="btn btn-outline-accent-secondary float-left">prev
+        </button>
+        <button (click)="loadAllNext()" *ngIf="admin && logged" class="btn btn-outline-accent-secondary float-right">next
+        </button>
+      </div>
     </div>
-    <div class="card" *ngIf="questionList.length < 1">
+    <div *ngIf="questionList.length < 1" class="card">
       <div class="card-header">
         {{ notification }}
       </div>

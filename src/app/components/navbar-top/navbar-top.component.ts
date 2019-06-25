@@ -26,6 +26,8 @@ export class NavbarTopComponent implements OnInit {
 
   user: UserModel;
 
+  userAdmin = false;
+
   REGISTER = 0;
   LOGIN = 1;
 
@@ -75,11 +77,12 @@ export class NavbarTopComponent implements OnInit {
     this.loadTags();
     this.dataSharing.currentUser
       .subscribe(
-        user => this.user = user
-  );
+        (user: UserModel ) => this.user = user
+      );
   }
 
   logout() {
     this.authorization.logOut();
   }
+
 }

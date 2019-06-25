@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg background-primary-dark fixed-top">
-  <span class="navbar-brand">
+  <span class="navbar-brand d-none d-md-inline-block">
     <a routerLink="">{{ title }}</a>
   </span>
 
-  <div class="d-inline-block" ngbDropdown>
+  <div ngbDropdown>
     <button class="btn btn-outline-accent" id="categoryDropdown" ngbDropdownToggle>Categories</button>
     <div aria-labelledby="categoryDropdown" ngbDropdownMenu>
       <button (click)="changeCategory(0)"

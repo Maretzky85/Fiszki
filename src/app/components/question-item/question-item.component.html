@@ -1,106 +1,87 @@
-<div *ngIf="question" class="mt-5">
-
-  <div class="d-flex">
-    <div class="mr-auto">
+<div *ngIf="question" class="container mt-3">
+  <div class="row">
+    <div class="col">
       <span *ngFor="let tag of question.tags">
         <span class="badge badge-custom-accent ml-2"> {{ tag.tagName}} </span>
       </span>
     </div>
-    <div *ngIf="logged">
-      <span *ngIf="!editMode" class="badge btn badge-warning mr-2" (click)="editMode=!editMode">Edit</span>
-      <span *ngIf="!editMode" class="badge btn badge-danger mr-2" (click)="delete()">Delete</span>
+    <div class="col">
+      <div *ngIf="logged">
+        <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger mr-2 float-right">Delete</span>
+        <span (click)="editMode=!editMode" *ngIf="!editMode"
+              class="badge btn badge-warning mr-2 float-right">Edit</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="!editMode" class="col background-primary-dark">
+      {{ question.title }}
+    </div>
+    <input *ngIf="editMode" [(ngModel)]="question.title" class="col background-primary-dark">
+  </div>
+  <div class="row">
+    <div *ngIf="!editMode" class="col background-primary-light p-2">
+      {{ question.question }}
+    </div>
+    <textarea *ngIf="editMode" [(ngModel)]="question.question" class="col background-primary-light">
+      </textarea>
+  </div>
+  <div *ngIf="editMode" class="row background-primary-light">
+    <div class="col">
+      <button (click)="submitQuestion()" class="badge btn btn-success float-left">Save</button>
+    </div>
+    <div class="col">
+      <button (click)="editMode=!editMode" class="badge btn btn-warning float-right">Cancel</button>
+    </div>
+  </div>
+  <div *ngIf="question.user" class="row">
+    <div class="col background-primary-light">
+      <span class="float-right small">posted by: {{ question.user.username }}</span>
+    </div>
+  </div>
+  <div class="row background-primary-light">
+    <div class="col">
+      <span *ngIf="question.answers && question.answers.length > 0">
+        <button (click)="showAnswer()"
+                *ngIf="hidden"
+                class="badge btn btn-outline-accent-secondary float-left">Show answer</button>
+        </span>
+    </div>
+    <div class="col">
+      <button
+        (click)="hasNewAnswer()"
+        *ngIf="!newAnswer && logged"
+        class="badge btn btn-outline-accent float-right">New Answer
+      </button>
     </div>
   </div>
 
-  <div class="card background-primary-dark">
-
-    <div class="border-custom-accent card" *ngIf="!editMode">
-
-      <div class="background-primary-dark card-header pre-wrap">
-        {{ question.title }}
-      </div>
-      <div class="card-body pre-wrap background-primary-light">
-        {{ question.question }}
-      </div>
-
-      <div class="d-flex background-primary-light mt-n3">
-        <div class="mr-auto">
-        <span *ngIf="question.answers && question.answers.length > 0">
-        <button class="badge btn btn-outline-accent-secondary m-2"
-                (click)="showAnswer()"
-                *ngIf="hidden">Show answer</button>
-        </span>
-        </div>
-        <button
-                class="badge btn btn-outline-accent m-2"
-                (click)="hasNewAnswer()"
-                *ngIf="!newAnswer && logged">New Answer
+  <form *ngIf="newAnswer" class="form-group ">
+    <div class="row">
+          <textarea [(ngModel)]="newAnswer.answer" class="form-control col"
+                    id="AnswerBody"
+                    name="answer"
+                    placeholder="answer"
+                    rows="5"
+                    type="text">
+            </textarea>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button (click)="submitAnswer()"
+                class="badge btn btn-success float-left"
+                type="submit">Submit
         </button>
       </div>
-
-      <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
-
-        <div class="container">
-
-          <div class="card  mr-4 mt-2 border-0">
-
-            <div class="card-group flex-column border-0">
-              <app-answer-item *ngFor="let answer of question.answers" [answer]=answer (emitter)="update()">
-              </app-answer-item>
-            </div>
-          </div>
-
-        </div>
-
+      <div class="col">
+        <button (click)="newAnswer = null"
+                class="badge btn btn-warning float-right">Cancel
+        </button>
       </div>
-
     </div>
-
-    <div *ngIf="editMode" class="card">
-
-      <input *ngIf="editMode" class="card-header" [(ngModel)]="question.title">
-
-      <textarea *ngIf="editMode" class="card-body" [(ngModel)]="question.question">
-    </textarea>
-
-      <span>
-        <button class="badge btn btn-success" (click)="submitQuestion()">Save</button>
-        <button class="badge btn btn-warning" (click)="editMode=!editMode">Cancel</button>
-      </span>
-
-    </div>
-
-
-    <div *ngIf="newAnswer">
-      <div class="jumbotron background-primary-light">
-
-        <form>
-
-          <div class="form-group">
-            <label for="AnswerBody">New Answer</label>
-            <textarea [(ngModel)]="newAnswer.answer" type="text"
-                      name="answer"
-                      class="form-control"
-                      rows="5"
-                      id="AnswerBody"
-                      placeholder="answer">
-            </textarea>
-          </div>
-
-          <button (click)="submitAnswer()"
-                  type="submit"
-                  class="badge btn btn-success ml-2">Submit
-          </button>
-
-          <button (click)="newAnswer = null"
-                  class="badge btn btn-warning ml-4">Cancel
-          </button>
-        </form>
-      </div>
-
-    </div>
-
+  </form>
+  <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
+  <app-answer-item (emitter)="update()" *ngFor="let answer of question.answers" [answer]=answer>
+  </app-answer-item>
   </div>
-
-
 </div>

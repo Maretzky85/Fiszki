@@ -1,29 +1,38 @@
-<div class="modal-header">
-  <h4 class="modal-title">Please enter login and password</h4>
-</div>
-  <div>
-    Username:<br>
-    <input [(ngModel)]="user.username">
+<div class="container">
+  <div class="modal-header row">
+    <h4 class="modal-title col">Please enter login and password</h4>
   </div>
-<div *ngIf="mode == REGISTER">
-  Email:<br>
-  <input [(ngModel)]="user.email">
-</div>
-  <div>
-    Password:<br>
-    <input type="password" [(ngModel)]="user.password">
+  <div class="row">
+    <div class="col">
+      Username:<br>
+      <input [(ngModel)]="user.username">
+    </div>
+  </div>
+  <div *ngIf="mode == REGISTER" class="row">
+    <div class="col">
+      Email:<br>
+      <input [(ngModel)]="user.email">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      Password:<br>
+      <input [(ngModel)]="user.password" type="password">
+    </div>
   </div>
 
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">Cancel</button>
-  <div *ngIf="mode == REGISTER">
-    <button type="button" class="btn btn-success" (click)="register()">Register</button>
-  </div>
-  <div *ngIf="mode == LOGIN">
-    <button type="button" class="btn btn-success" (click)="login()">Login</button>
+  <div class="modal-footer row">
+    <div class="col">
+      <button (click)="activeModal.dismiss()" class="btn btn-outline-secondary float-left" type="button">Cancel</button>
+      <div *ngIf="mode == REGISTER">
+        <button (click)="register()" class="btn btn-success float-right" type="button">Register</button>
+      </div>
+      <div *ngIf="mode == LOGIN">
+        <button (click)="login()" class="btn btn-success float-right" type="button">Login</button>
+      </div>
+    </div>
   </div>
 </div>
-
 <!--<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"-->
 <!--        (click)="frame.show()" mdbWavesEffect>Launch Modal</button>-->
 

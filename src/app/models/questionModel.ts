@@ -1,4 +1,5 @@
 import {Answer, ResponseInterface, QuestionTag} from './responseInterface';
+import {UserModel} from './UserModel';
 
 export class QuestionModel implements ResponseInterface {
   answers: Answer[];
@@ -6,4 +7,5 @@ export class QuestionModel implements ResponseInterface {
   question: string;
   title: string;
   tags: QuestionTag[];
+  user: UserModel;
 }

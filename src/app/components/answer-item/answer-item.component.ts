@@ -51,6 +51,7 @@ export class AnswerItemComponent implements OnInit {
 
   ngOnInit() {
     this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
+    console.log(this.answer);
   }
 
 }

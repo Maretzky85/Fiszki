@@ -5,8 +5,6 @@ import {DataSharingService} from '../../services/data-sharing.service';
 import {NotificationService} from '../../services/notification.service';
 import {ActivatedRoute} from '@angular/router';
 import {PageableModel} from '../../models/pageableModel';
-import {HttpParams} from '@angular/common/http';
-import {HttpParamsOptions} from '@angular/common/http/src/params';
 
 @Component({
   selector: 'app-question',

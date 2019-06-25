@@ -1,23 +1,35 @@
-  <div class="card m-2 border-custom-sides" *ngIf="answer">
+<div *ngIf="answer" class="container mt-1">
 
-      <div class="card-header d-flex">
-        <button *ngIf="!editMode && logged" class="badge btn btn-warning mr-auto align-self-start"
-                   (click)="editMode = !editMode">Edit</button>
+  <div class="row">
+    <div class="col background-primary-light">
+      <button (click)="editMode = !editMode" *ngIf="!editMode && logged"
+              class="badge btn btn-warning float-left">Edit
+      </button>
 
-        <button *ngIf="editMode" (click)="saveEditedAnswer()"
-                class="badge btn btn-outline-success mr-auto align-self-start">Save</button>
+      <button (click)="saveEditedAnswer()" *ngIf="editMode"
+              class="badge btn btn-outline-success float-left">Save
+      </button>
 
-        <button *ngIf="editMode" class="badge btn btn-warning ml-auto align-self-end"
-                (click)="editMode = !editMode">Cancel</button>
+      <button (click)="editMode = !editMode" *ngIf="editMode"
+              class="badge btn btn-warning float-right">Cancel
+      </button>
 
-        <button *ngIf="!editMode && logged" (click)="deleteAnswer()"
-                class="badge btn btn-danger ml-auto align-self-end">Delete</button>
-      </div>
-
-      <div class="card-body m-2 p-2"  *ngIf="editMode" >
-        <textarea class="card-body" [(ngModel)]="answer.answer"></textarea>
-      </div>
-
-      <div class="pre-wrap p-2" *ngIf="!editMode">{{ answer.answer }}</div>
-
+      <button (click)="deleteAnswer()" *ngIf="!editMode && logged"
+              class="badge btn btn-danger float-right">Delete
+      </button>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="col background-primary-light">
+      <div *ngIf="!editMode" class="p-2">{{ answer.answer }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col background-primary-light">
+      <div *ngIf="answer.user" class="small float-right">posted by: {{answer.user.username}}</div>
+    </div>
+  </div>
+
+</div>
