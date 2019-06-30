@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {QuestionComponent} from './components/questions/question.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {QuestionItemComponent} from './components/question-item/question-item.component';
+import {QuestionItemComponent} from './components/questions/question-item/question-item.component';
 import {AnswerItemComponent} from './components/answer-item/answer-item.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';

@@ -8,4 +8,5 @@ export class QuestionModel implements ResponseInterface {
   title: string;
   tags: QuestionTag[];
   user: UserModel;
+  accepted: boolean;
 }

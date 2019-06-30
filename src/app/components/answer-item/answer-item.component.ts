@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AnswerModel} from '../../models/answerModel';
 import {ConnectionService} from '../../services/connection.service';
 import {NotificationService} from '../../services/notification.service';
-import {AuthService} from '../../services/auth.service';
 import {DataSharingService} from '../../services/data-sharing.service';
 
 @Component({
@@ -51,7 +50,6 @@ export class AnswerItemComponent implements OnInit {
 
   ngOnInit() {
     this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
-    console.log(this.answer);
   }
 
 }

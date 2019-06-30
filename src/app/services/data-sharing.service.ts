@@ -19,6 +19,13 @@ export class DataSharingService {
 
   public tagsList;
 
+  private adminLogged = new BehaviorSubject(false);
+  admin = this.adminLogged.asObservable();
+
+  setAdmin(adminLogged: boolean) {
+    this.adminLogged.next(adminLogged);
+  }
+
   changeCategory(category: number) {
     this.category.next(category);
   }

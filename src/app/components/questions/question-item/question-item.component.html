@@ -14,8 +14,16 @@
     </div>
   </div>
   <div class="row">
-    <div *ngIf="!editMode" class="col background-primary-dark">
+    <div *ngIf="!editMode"
+         [class.col-11]="adminLogged && !question.accepted"
+         [class.col]="!adminLogged || question.accepted"
+         class="background-primary-dark">
       {{ question.title }}
+    </div>
+    <div *ngIf="adminLogged && !question.accepted"
+         [class.d-none]="question.accepted"
+         class="col-1 background-primary-dark">
+      <button class="btn btn-accent" (click)="acceptQuestion()">Accept</button>
     </div>
     <input *ngIf="editMode" [(ngModel)]="question.title" class="col background-primary-dark">
   </div>

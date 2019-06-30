@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {QuestionModel} from '../../models/questionModel';
-import {AnswerModel} from '../../models/answerModel';
-import {ConnectionService} from '../../services/connection.service';
-import {NotificationService} from '../../services/notification.service';
-import {AuthService} from '../../services/auth.service';
-import {DataSharingService} from '../../services/data-sharing.service';
+import {QuestionModel} from '../../../models/questionModel';
+import {AnswerModel} from '../../../models/answerModel';
+import {ConnectionService} from '../../../services/connection.service';
+import {NotificationService} from '../../../services/notification.service';
+import {AuthService} from '../../../services/auth.service';
+import {DataSharingService} from '../../../services/data-sharing.service';
+import {HttpHeaderResponse, HttpResponse, HttpResponseBase} from '@angular/common/http';
 
 @Component({
   selector: 'app-question-item',
@@ -23,6 +24,8 @@ export class QuestionItemComponent implements OnInit {
 
   logged = false;
 
+  adminLogged = false;
+
   constructor(private connection: ConnectionService,
               private dataSharing: DataSharingService,
               private notify: NotificationService) {
@@ -32,7 +35,17 @@ export class QuestionItemComponent implements OnInit {
     this.hidden = false;
   }
 
+  acceptQuestion() {
+    this.connection.acceptQuestion(this.question.id)
+      .subscribe((question: QuestionModel) => {
+          this.question = question;
+          this.notify.showSuccess(question.title, 'Accepted');
+        }
+      );
+  }
+
   ngOnInit() {
+    this.dataSharing.admin.subscribe(value => this.adminLogged = value);
     this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
   }
 

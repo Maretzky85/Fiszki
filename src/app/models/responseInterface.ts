@@ -1,5 +1,3 @@
-import {UserModel} from './UserModel';
-
 export interface ResponseInterface  {
   id: number;
   title: string;

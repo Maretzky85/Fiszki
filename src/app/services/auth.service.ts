@@ -11,8 +11,8 @@ export class AuthService {
 
   token;
 
-  address = 'https://fiszkiapi.sikoramarek.com/';
-  // address = 'http://localhost:8080/';
+  // address = 'https://fiszkiapi.sikoramarek.com/';
+  address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(private http: HttpClient,
@@ -53,6 +53,12 @@ export class AuthService {
               this.token = x.headers.get('Authorization');
               user.password = undefined;
               this.dataSharing.changeUser(user);
+              const roles: String = x.headers.get('roles');
+              if (roles.includes('ADMIN')) {
+                this.dataSharing.setAdmin(true);
+              } else {
+                this.dataSharing.setAdmin(false);
+              }
             }
           }
         ))
