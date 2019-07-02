@@ -13,6 +13,10 @@ const routes: Routes = [
     component: QuestionComponent,
   },
   {
+    path: 'known',
+    component: QuestionComponent,
+  },
+  {
     path: 'questions/:id',
     component: QuestionComponent
   },

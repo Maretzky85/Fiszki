@@ -6,6 +6,7 @@ import {NotificationService} from '../../../services/notification.service';
 import {AuthService} from '../../../services/auth.service';
 import {DataSharingService} from '../../../services/data-sharing.service';
 import {HttpHeaderResponse, HttpResponse, HttpResponseBase} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-question-item',
@@ -26,9 +27,12 @@ export class QuestionItemComponent implements OnInit {
 
   adminLogged = false;
 
+  known = false;
+
   constructor(private connection: ConnectionService,
               private dataSharing: DataSharingService,
-              private notify: NotificationService) {
+              private notify: NotificationService,
+              private route: ActivatedRoute) {
   }
 
   showAnswer() {
@@ -47,6 +51,9 @@ export class QuestionItemComponent implements OnInit {
   ngOnInit() {
     this.dataSharing.admin.subscribe(value => this.adminLogged = value);
     this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
+    if (this.route.snapshot.routeConfig.path === 'known') {
+      this.known = true;
+    }
   }
 
   hasNewAnswer() {
@@ -90,4 +97,11 @@ export class QuestionItemComponent implements OnInit {
     );
   }
 
+  markQuestion() {
+    this.connection.markQuestion(this.question.id)
+      .subscribe(value => {
+        this.notify.showSuccess(this.question.title, 'Saved!');
+        this.question = undefined;
+      });
+  }
 }

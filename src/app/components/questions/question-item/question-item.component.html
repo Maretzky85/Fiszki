@@ -19,11 +19,13 @@
          [class.col]="!adminLogged || question.accepted"
          class="background-primary-dark">
       {{ question.title }}
+      <button (click)="markQuestion()" *ngIf="logged && !known && question.accepted" class="btn btn-accent float-right">I know this</button>
+      <button (click)="markQuestion()" *ngIf="logged && known && question.accepted" class="btn btn-accent float-right">I forgot this</button>
     </div>
     <div *ngIf="adminLogged && !question.accepted"
          [class.d-none]="question.accepted"
          class="col-1 background-primary-dark">
-      <button class="btn btn-accent" (click)="acceptQuestion()">Accept</button>
+      <button (click)="acceptQuestion()" class="btn btn-accent">Accept</button>
     </div>
     <input *ngIf="editMode" [(ngModel)]="question.title" class="col background-primary-dark">
   </div>
@@ -89,7 +91,7 @@
     </div>
   </form>
   <div *ngIf="question.answers && question.answers.length > 0 && !hidden">
-  <app-answer-item (emitter)="update()" *ngFor="let answer of question.answers" [answer]=answer>
-  </app-answer-item>
+    <app-answer-item (emitter)="update()" *ngFor="let answer of question.answers" [answer]=answer>
+    </app-answer-item>
   </div>
 </div>

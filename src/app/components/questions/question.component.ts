@@ -43,12 +43,18 @@ export class QuestionComponent implements OnInit {
     this.dataSharing.currentUser.subscribe(value => this.logged = !!value);
     this.questionId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.route.snapshot.routeConfig.path === 'admin') {
-      this.admin = true;
       if (!this.logged) {
         this.notification = 'Only for logged Users';
         return;
       }
+      this.admin = true;
       this.loadAllQuestions();
+    } else if (this.route.snapshot.routeConfig.path === 'known') {
+      if (!this.logged) {
+        this.notification = 'Only for logged Users';
+        return;
+      }
+      this.loadKnownQuestions();
     } else {
       this.dataSharing.currentCategory.subscribe((category) => {
         if (this.questionId) {
@@ -111,6 +117,14 @@ export class QuestionComponent implements OnInit {
       this.params.page = this.params.page - 1;
     }
     this.loadAllQuestions();
+  }
+
+  private loadKnownQuestions() {
+    this.connection.loadKnownQuestions().subscribe((value: QuestionModel[]) => {
+        this.questionList = value;
+        this.notification = 'No questions found';
+      },
+      (error) => this.notify.handleError(error));
   }
 
   swipe(e: TouchEvent, when: string): void {

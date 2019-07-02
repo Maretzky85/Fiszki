@@ -113,4 +113,19 @@ export class ConnectionService {
       {},
       {headers: this.headers});
   }
+
+  markQuestion(id: number) {
+    return this.http.post(this.address +
+      'users/mark_question/' + id,
+      {},
+      {headers: this.headers}
+    );
+  }
+
+  loadKnownQuestions() {
+    return this.http.get(this.address +
+      'users/known_questions/',
+      {headers: this.headers}
+    );
+  }
 }
