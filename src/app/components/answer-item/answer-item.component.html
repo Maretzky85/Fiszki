@@ -22,13 +22,16 @@
 
   <div class="row">
     <div class="col background-primary-light">
-      <div *ngIf="!editMode" class="p-2">{{ answer.answer }}</div>
+      <pre *ngIf="!editMode" class="p-2">{{ answer.answer }}</pre>
     </div>
+  </div>
+  <div class="row" *ngIf="editMode">
+      <textarea rows="10" class="col background-primary-light" [(ngModel)]="answer.answer"></textarea>
   </div>
 
   <div class="row">
     <div class="col background-primary-light">
-      <div *ngIf="answer.user" class="small float-right">posted by: {{answer.user.username}}</div>
+      <div *ngIf="answer.user" class="small float-right">posted by: {{answer.user}}</div>
     </div>
   </div>
 

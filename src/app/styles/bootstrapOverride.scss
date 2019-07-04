@@ -7,6 +7,14 @@ $accent-secondary: #AC3B61;
 $accent-secondary-transparent: rgba(172, 59, 97, .5);
 $color-text: #FFF;
 
+pre {
+  overflow-x: scroll;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-spaces;
+}
+
 .background-primary-dark{
   background-color: $primary-dark;
 }

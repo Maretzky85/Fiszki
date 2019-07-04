@@ -1,8 +1,7 @@
-import { Answer } from './responseInterface';
-import {UserModel} from './UserModel';
+import {Answer} from './responseInterface';
 
 export class AnswerModel implements Answer {
   answer: string;
   id: number;
-  user: UserModel;
+  user: String;
 }

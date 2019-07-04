@@ -1,5 +1,4 @@
-import {Answer, ResponseInterface, QuestionTag} from './responseInterface';
-import {UserModel} from './UserModel';
+import {Answer, QuestionTag, ResponseInterface} from './responseInterface';
 
 export class QuestionModel implements ResponseInterface {
   answers: Answer[];
@@ -7,6 +6,6 @@ export class QuestionModel implements ResponseInterface {
   question: string;
   title: string;
   tags: QuestionTag[];
-  user: UserModel;
+  user: String;
   accepted: boolean;
 }
