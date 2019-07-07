@@ -1,7 +1,30 @@
+dist: trustly
+sudo: false
+
 language: node_js
 node_js:
 - '11.6.0'
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  -npm install
+
+npm:
+- '6.9.0'
+
 scripts:
   - npm install codecov -g
+  - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+  - npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+
 after_success:
   - codecov
