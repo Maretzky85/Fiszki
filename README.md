@@ -1,4 +1,5 @@
 # Fiszki
+[![Known Vulnerabilities](https://snyk.io/test/github/Maretzky85/Fiszki/badge.svg)](https://snyk.io/test/github/Maretzky85/Fiszki)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
 
