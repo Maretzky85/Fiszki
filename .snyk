@@ -6,3 +6,8 @@ patch:
   'npm:moment:20170905':
     - ng-bootstrap > moment:
         patched: '2019-07-10T10:00:59.847Z'
+  SNYK-JS-LODASH-450202:
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-10T10:05:17.771Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-10T10:05:17.771Z'
