@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarTopComponent } from './navbar-top.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('NavbarTopComponent', () => {
   let component: NavbarTopComponent;
@@ -8,7 +9,8 @@ describe('NavbarTopComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarTopComponent ]
+      declarations: [ NavbarTopComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

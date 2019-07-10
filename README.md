@@ -1,6 +1,9 @@
 # Fiszki
+[![Known Vulnerabilities](https://snyk.io/test/github/Maretzky85/Fiszki/badge.svg)](https://snyk.io/test/github/Maretzky85/Fiszki)
+[![Maintainability](https://api.codeclimate.com/v1/badges/534452b6707b9ca711bc/maintainability)](https://codeclimate.com/github/Maretzky85/Fiszki/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/534452b6707b9ca711bc/test_coverage)](https://codeclimate.com/github/Maretzky85/Fiszki/test_coverage)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
 
 ## Development server
 

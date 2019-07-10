@@ -1,12 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ConnectionService} from '../../services/connection.service';
-import {FormControl, Validators} from '@angular/forms';
 import {UserModel} from '../../models/UserModel';
-import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationService} from '../../services/notification.service';
 import {AuthService} from '../../services/auth.service';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-register-login',
@@ -25,7 +21,8 @@ export class RegisterLoginComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal,
               private notify: NotificationService,
-              public auth: AuthService) { }
+              public auth: AuthService) {
+  }
 
   ngOnInit() {
     this.user = new UserModel();
@@ -39,7 +36,7 @@ export class RegisterLoginComponent implements OnInit {
           this.activeModal.close();
         },
         error1 => {
-          console.log(error1)
+          console.log(error1);
           this.notify.showWarning('Error', '');
         }
       );
@@ -51,11 +48,11 @@ export class RegisterLoginComponent implements OnInit {
         resp => {
           this.notify.showSuccess('Welcome ' + this.user.username, 'Logged in');
           this.activeModal.close();
-          },
-          () => {
-            this.notify.showWarning('Cannot log in', '');
-            }
-          );
+        },
+        () => {
+          this.notify.showWarning('Cannot log in', '');
+        }
+      );
   }
 
 }

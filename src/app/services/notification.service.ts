@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {HttpErrorResponse} from '@angular/common/http';
 
