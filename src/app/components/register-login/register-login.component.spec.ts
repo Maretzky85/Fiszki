@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterLoginComponent } from './register-login.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 describe('RegisterLoginComponent', () => {
   let component: RegisterLoginComponent;
@@ -8,7 +10,9 @@ describe('RegisterLoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterLoginComponent ]
+      declarations: [ RegisterLoginComponent,
+                      NgbActiveModal],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

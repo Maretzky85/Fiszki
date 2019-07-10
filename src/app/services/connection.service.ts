@@ -8,8 +8,8 @@ import {TagModel} from '../models/tagModel';
   providedIn: 'root'
 })
 export class ConnectionService {
-  address = 'https://fiszkiapi.sikoramarek.com/';
-  // address = 'http://localhost:8080/';
+  // address = 'https://fiszkiapi.sikoramarek.com/';
+  address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(public http: HttpClient) {

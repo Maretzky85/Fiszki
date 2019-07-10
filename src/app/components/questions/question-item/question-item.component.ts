@@ -1,11 +1,9 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {QuestionModel} from '../../../models/questionModel';
 import {AnswerModel} from '../../../models/answerModel';
 import {ConnectionService} from '../../../services/connection.service';
 import {NotificationService} from '../../../services/notification.service';
-import {AuthService} from '../../../services/auth.service';
 import {DataSharingService} from '../../../services/data-sharing.service';
-import {HttpHeaderResponse, HttpResponse, HttpResponseBase} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

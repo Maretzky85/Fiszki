@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+@import '~ngx-toastr/toastr.css';
+
 @import "~src/app/styles/spinner";
 
 @import "~src/app/styles/bootstrapOverride";
 
 @import "~src/app/styles/loading-bar";
+
+
