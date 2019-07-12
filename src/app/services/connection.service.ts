@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {QuestionModel} from '../models/questionModel';
 import {AnswerModel} from '../models/answerModel';
 import {TagModel} from '../models/tagModel';
+import {Observable} from 'rxjs';
+import {PageableModel} from '../models/pageableModel';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +17,23 @@ export class ConnectionService {
   constructor(public http: HttpClient) {
   }
 
-  getQuestions(question_id?: number) {
-    if (question_id) {
-      return this.http.get(this.address + 'questions/' + question_id, {headers: this.headers});
+  getQuestions(questionId?: number): Observable<QuestionModel[]> {
+    if (questionId) {
+      return this.http.get<QuestionModel[]>(this.address + 'questions/' + questionId, {headers: this.headers});
     } else {
-      return this.http.get(this.address + 'questions/random', {headers: this.headers});
+      return this.http.get<QuestionModel[]>(this.address + 'questions/random', {headers: this.headers});
     }
   }
 
-  getTags() {
+  getTags(): Observable<TagModel[]> {
     return this.http
-      .get(
+      .get<TagModel[]>(
         this.address + 'tags');
   }
 
-  getQuestionsByTagId(tagId: number) {
+  getQuestionsByTagId(tagId: number): Observable<QuestionModel[]> {
     return this.http
-      .get(
+      .get<QuestionModel[]>(
         this.address
         + 'tags/'
         + tagId
@@ -99,8 +101,8 @@ export class ConnectionService {
       {headers: this.headers});
   }
 
-  getAllQuestions(inputParams?) {
-    return this.http.get(this.address +
+  getAllQuestions(inputParams?): Observable<PageableModel> {
+    return this.http.get<PageableModel>(this.address +
       'questions/',
       {headers: this.headers,
         params: inputParams ? inputParams : null});
@@ -122,8 +124,8 @@ export class ConnectionService {
     );
   }
 
-  loadKnownQuestions() {
-    return this.http.get(this.address +
+  loadKnownQuestions(): Observable<QuestionModel[]> {
+    return this.http.get<QuestionModel[]>(this.address +
       'users/known_questions/',
       {headers: this.headers}
     );

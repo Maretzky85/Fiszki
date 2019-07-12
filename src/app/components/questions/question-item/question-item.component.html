@@ -6,7 +6,7 @@
       </span>
     </div>
     <div class="col">
-      <div *ngIf="logged">
+      <div *ngIf="dataService.user">
         <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger mr-2 float-right">Delete</span>
         <span (click)="editMode=!editMode" *ngIf="!editMode"
               class="badge btn badge-warning mr-2 float-right">Edit</span>
@@ -15,14 +15,14 @@
   </div>
   <div class="row">
     <div *ngIf="!editMode"
-         [class.col-11]="adminLogged && !question.accepted"
-         [class.col]="!adminLogged || question.accepted"
+         [class.col-11]="dataService.isAdmin && !question.accepted"
+         [class.col]="!dataService.isAdmin || question.accepted"
          class="background-primary-dark">
       {{ question.title }}
-      <button (click)="markQuestion()" *ngIf="logged && !known && question.accepted" class="btn btn-accent float-right">I know this</button>
-      <button (click)="markQuestion()" *ngIf="logged && known && question.accepted" class="btn btn-accent float-right">I forgot this</button>
+      <button (click)="markQuestion()" *ngIf="dataService.user && !known && question.accepted" class="btn btn-accent float-right">I know this</button>
+      <button (click)="markQuestion()" *ngIf="dataService.user && known && question.accepted" class="btn btn-accent float-right">I forgot this</button>
     </div>
-    <div *ngIf="adminLogged && !question.accepted"
+    <div *ngIf="dataService.isAdmin && !question.accepted"
          [class.d-none]="question.accepted"
          class="col-1 background-primary-dark">
       <button (click)="acceptQuestion()" class="btn btn-accent">Accept</button>
@@ -60,7 +60,7 @@
     <div class="col">
       <button
         (click)="hasNewAnswer()"
-        *ngIf="!newAnswer && logged"
+        *ngIf="!newAnswer && dataService.user"
         class="badge btn btn-outline-accent float-right">New Answer
       </button>
     </div>

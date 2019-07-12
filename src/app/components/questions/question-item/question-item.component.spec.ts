@@ -5,7 +5,6 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {QuestionModel} from '../../../models/questionModel';
 import {QuestionComponent} from '../question.component';
 import {ConnectionService} from '../../../services/connection.service';
-import {DataSharingService} from '../../../services/data-sharing.service';
 import {NotificationService} from '../../../services/notification.service';
 
 describe('QuestionItemComponent', () => {
@@ -18,7 +17,6 @@ describe('QuestionItemComponent', () => {
                       QuestionModel,
                       QuestionComponent,
                       ConnectionService,
-                      DataSharingService,
                       NotificationService],
       schemas: [ NO_ERRORS_SCHEMA ]
     })

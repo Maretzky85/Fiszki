@@ -2,12 +2,17 @@ import {Injectable} from '@angular/core';
 import {UserModel} from '../models/UserModel';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
-import {DataSharingService} from './data-sharing.service';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private user = new BehaviorSubject(undefined);
+  currentUser$ = this.user.asObservable();
+
+  isAdmin = false;
 
   token;
 
@@ -15,18 +20,17 @@ export class AuthService {
   address = 'http://localhost:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
-  constructor(private http: HttpClient,
-              private dataSharing: DataSharingService) {
+  constructor(private http: HttpClient) {
   }
 
   logOut() {
     this.token = undefined;
-    this.dataSharing.changeUser(undefined);
+    this.user.next(undefined);
   }
 
   register(user: UserModel) {
     return this.http
-      .post(this.address + 'users',
+      .post<UserModel>(this.address + 'users',
         JSON.stringify(user),
         {headers: this.headers, observe: 'response'})
       .pipe(
@@ -35,7 +39,7 @@ export class AuthService {
             if (x instanceof HttpResponse) {
               this.token = x.headers.get('Authorization');
               user.password = undefined;
-              this.dataSharing.changeUser(user);
+              this.user.next(user);
             }
           }
         ));
@@ -52,17 +56,16 @@ export class AuthService {
             if (x instanceof HttpResponse) {
               this.token = x.headers.get('Authorization');
               user.password = undefined;
-              this.dataSharing.changeUser(user);
-              const roles: String = x.headers.get('roles');
+              this.user.next(user);
+              const roles: string = x.headers.get('roles');
               if (roles.includes('ADMIN')) {
-                this.dataSharing.setAdmin(true);
+                this.isAdmin = true;
               } else {
-                this.dataSharing.setAdmin(false);
+                this.isAdmin = false;
               }
             }
           }
-        ))
-      ;
+        ));
   }
 
 

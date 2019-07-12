@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AnswerModel} from '../../models/answerModel';
 import {ConnectionService} from '../../services/connection.service';
 import {NotificationService} from '../../services/notification.service';
-import {DataSharingService} from '../../services/data-sharing.service';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-answer-item',
@@ -17,10 +17,8 @@ export class AnswerItemComponent implements OnInit {
 
   editMode = false;
 
-  logged;
-
   constructor(private connection: ConnectionService,
-              private dataSharing: DataSharingService,
+              public dataService: DataService,
               private notify: NotificationService) {
   }
 
@@ -49,7 +47,6 @@ export class AnswerItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
   }
 
 }

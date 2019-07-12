@@ -25,11 +25,6 @@ const routes: Routes = [
     component: NewQuestionComponent
   },
   {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
-  },
-  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
