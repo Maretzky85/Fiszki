@@ -68,12 +68,4 @@ export class AuthService {
         ));
   }
 
-
-  hasToken(): boolean {
-    return !!this.token;
-  }
-
-  getToken() {
-    return this.token;
-  }
 }

@@ -21,7 +21,7 @@
   </div>
 
 
-  <div *ngIf="dataService.user" class="d-inline-block" ngbDropdown>
+  <div *ngIf="dataService.currentUser" class="d-inline-block" ngbDropdown>
     <button class="btn btn-outline-accent" id="addDropdown" ngbDropdownToggle>Add...</button>
     <div aria-labelledby="addDropdown" ngbDropdownMenu>
       <button class="dropdown-item"
@@ -44,16 +44,18 @@
     </div>
   </div>
 
-  <div *ngIf="dataService.user">
+  <div *ngIf="dataService.currentUser">
     <div class="d-inline-block" ngbDropdown>
-      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ dataService.user.username }}</button>
+      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ dataService.currentUser.username }}</button>
       <div aria-labelledby="userDropdown" ngbDropdownMenu>
         <button
           class="dropdown-item" (click)="dataService.loadAll()">
           Show All
         </button>
         <button
-          class="dropdown-item" (click)="dataService.knownQuestions()">
+          class="dropdown-item"
+          routerLink="/known"
+          (click)="dataService.knownQuestions()">
           Show learned
         </button>
         <button
@@ -65,7 +67,7 @@
     </div>
 
   </div>
-  <div *ngIf="!dataService.user">
+  <div *ngIf="!dataService.currentUser">
     <button (click)="openModal(REGISTER)" class="btn btn-sm btn-outline-accent-secondary mr-2">Register</button>
     <button (click)="openModal(LOGIN)" class="btn btn-sm btn-outline-accent-secondary">Login</button>
   </div>

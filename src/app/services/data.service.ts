@@ -18,9 +18,9 @@ export class DataService {
 
   tags$: Observable<TagModel[]>;
 
-  private category = 0;
+  private selectedCategory = 0;
 
-  user: UserModel;
+  currentUser: UserModel;
 
   isAdmin: boolean;
 
@@ -36,7 +36,7 @@ export class DataService {
     this.isAdmin = this.auth.isAdmin;
     this.tags$ = this.connection.getTags();
     this.auth.currentUser$
-      .subscribe((user: UserModel) => this.user = user);
+      .subscribe((user: UserModel) => this.currentUser = user);
     this.questions$ = this.connection.getQuestions();
   }
 
@@ -47,10 +47,10 @@ export class DataService {
         size: this.page.pageSize
       });
     } else
-    if (this.category === 0) {
+    if (this.selectedCategory === 0) {
       this.questions$ = this.connection.getQuestions();
     } else {
-      this.questions$ = this.connection.getQuestionsByTagId(this.category);
+      this.questions$ = this.connection.getQuestionsByTagId(this.selectedCategory);
     }
   }
 
@@ -64,7 +64,8 @@ export class DataService {
   }
 
   knownQuestions() {
-    if (this.user) {
+    if (this.currentUser) {
+      this.page = undefined;
       this.questions$ = this.connection.loadKnownQuestions();
     } else {
       this.notify.showWarning('Must be logged', 'Unlogged');
@@ -73,7 +74,7 @@ export class DataService {
 
   setCategory(category: number) {
     this.page = undefined;
-    this.category = category;
+    this.selectedCategory = category;
     this.next();
   }
 
