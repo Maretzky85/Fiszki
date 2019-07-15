@@ -5,18 +5,26 @@
       <div class="col">
         <button (click)="loadNext()"
                 *ngIf="(dataService.page && !dataService.page.last) || !dataService.page"
-                class="btn btn-outline-accent-secondary float-right">next</button>
+                class="btn btn-outline-accent-secondary float-right">next
+        </button>
         <button (click)="loadPrev()" *ngIf="dataService.page && !dataService.page.first"
-                class="btn btn-outline-accent-secondary float-left">prev</button>
+                class="btn btn-outline-accent-secondary float-left">prev
+        </button>
       </div>
     </div>
-    <div *ngIf="!(dataService.questions$ | async)" class="card">
-      <div class="card-header">
-        Loading
+    <div *ngIf="dataService.questions$ | async as questions; else loading">
+      <div *ngIf="questions.length < 1" class="card-header">
+        No questions found
       </div>
+      <app-question-item *ngFor="let question of questions" [question]="question"></app-question-item>
     </div>
-    <app-question-item
-      *ngFor="let question of (dataService.questions$ | async)"
-      [question]="question"></app-question-item>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="card">
+    <div class="card-header">
+      Loading
+    </div>
+  </div>
+</ng-template>
