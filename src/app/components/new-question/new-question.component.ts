@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectionService} from '../../services/connection.service';
 import {QuestionModel} from '../../models/questionModel';
-import {QuestionTag} from '../../models/responseInterface';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {AnswerModel} from '../../models/answerModel';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../services/notification.service';
-import {DataSharingService} from '../../services/data-sharing.service';
+import {DataService} from '../../services/data.service';
+import {TagModel} from '../../models/tagModel';
 
 @Component({
   selector: 'app-new-question',
@@ -16,7 +16,7 @@ import {DataSharingService} from '../../services/data-sharing.service';
 export class NewQuestionComponent implements OnInit {
   form: FormGroup;
 
-  availableTags: QuestionTag[];
+  availableTags: TagModel[];
 
   question: QuestionModel;
 
@@ -28,15 +28,19 @@ export class NewQuestionComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private notify: NotificationService,
-              private dataSharing: DataSharingService) {
+              private dataService: DataService) {
     this.question = new QuestionModel();
     this.answer = new AnswerModel();
     this.form = this.formBuilder.group({
       tags: new FormArray([])
     });
+    this.loadTags().then((value: TagModel[] ) => {this.availableTags = value; this.addCheckboxes(); });
+  }
 
-    this.availableTags = this.dataSharing.tagsList;
-    this.addCheckboxes();
+  loadTags() {
+    return new Promise(((resolve, reject) => {
+      this.dataService.tags$.subscribe(value => resolve(value), error1 => reject(error1));
+    }));
   }
 
   submit() {
@@ -70,18 +74,18 @@ export class NewQuestionComponent implements OnInit {
     });
   }
 
+  private addTags() {
+    this.form.value.tags
+      .map((v, i) => v ? this.question.tags.push(this.availableTags[i]) : null)
+      .filter(v => v !== null);
+  }
+
   private addAnswer() {
     if (this.hasAnswer) {
       const answer = new AnswerModel();
       answer.answer = this.answer.answer;
       this.question.answers.push(answer);
     }
-  }
-
-  private addTags() {
-    this.form.value.tags
-      .map((v, i) => v ? this.question.tags.push(this.availableTags[i]) : null)
-      .filter(v => v !== null);
   }
 }
 

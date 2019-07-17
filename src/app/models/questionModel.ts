@@ -6,6 +6,6 @@ export class QuestionModel implements ResponseInterface {
   question: string;
   title: string;
   tags: QuestionTag[];
-  user: String;
+  user: string;
   accepted: boolean;
 }

@@ -6,12 +6,12 @@
   <div ngbDropdown>
     <button class="btn btn-outline-accent" id="categoryDropdown" ngbDropdownToggle>Categories</button>
     <div aria-labelledby="categoryDropdown" ngbDropdownMenu>
-      <button (click)="changeCategory(0)"
+      <button (click)="dataService.setCategory(0)"
               class="dropdown-item" routerLink="home">
         All
       </button>
-      <div *ngFor="let tag of tagList; let i = index">
-        <button (click)="changeCategory(tagList[i].id)"
+      <div *ngFor="let tag of (dataService.tags$ | async)">
+        <button (click)="dataService.setCategory(tag.id)"
                 class="dropdown-item"
                 routerLink="home">
           {{ tag.tagName }}
@@ -21,11 +21,10 @@
   </div>
 
 
-  <div *ngIf="user" class="d-inline-block" ngbDropdown>
+  <div *ngIf="dataService.currentUser" class="d-inline-block" ngbDropdown>
     <button class="btn btn-outline-accent" id="addDropdown" ngbDropdownToggle>Add...</button>
     <div aria-labelledby="addDropdown" ngbDropdownMenu>
-      <button *ngIf="user"
-              class="dropdown-item"
+      <button class="dropdown-item"
               routerLink="newQuestion">
         New Question
       </button>
@@ -45,18 +44,18 @@
     </div>
   </div>
 
-  <div *ngIf="user">
+  <div *ngIf="dataService.currentUser">
     <div class="d-inline-block" ngbDropdown>
-      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ user.username }}</button>
+      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ dataService.currentUser.username }}</button>
       <div aria-labelledby="userDropdown" ngbDropdownMenu>
         <button
-          class="dropdown-item"
-          routerLink="admin">
+          class="dropdown-item" (click)="dataService.loadAll()">
           Show All
         </button>
         <button
           class="dropdown-item"
-          routerLink="known">
+          routerLink="/known"
+          (click)="dataService.knownQuestions()">
           Show learned
         </button>
         <button
@@ -68,7 +67,7 @@
     </div>
 
   </div>
-  <div *ngIf="!user">
+  <div *ngIf="!dataService.currentUser">
     <button (click)="openModal(REGISTER)" class="btn btn-sm btn-outline-accent-secondary mr-2">Register</button>
     <button (click)="openModal(LOGIN)" class="btn btn-sm btn-outline-accent-secondary">Login</button>
   </div>

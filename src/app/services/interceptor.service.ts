@@ -35,10 +35,10 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private addAuthorizationToken(req: HttpRequest<any>): HttpRequest<any> {
-    if (this.auth.hasToken()) {
+    if (this.auth.token) {
       req = req.clone({
         setHeaders: {
-          Authorization: `${this.auth.getToken()}`
+          Authorization: `${this.auth.token}`
         }
       });
     }

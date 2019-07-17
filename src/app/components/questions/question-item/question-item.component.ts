@@ -3,8 +3,8 @@ import {QuestionModel} from '../../../models/questionModel';
 import {AnswerModel} from '../../../models/answerModel';
 import {ConnectionService} from '../../../services/connection.service';
 import {NotificationService} from '../../../services/notification.service';
-import {DataSharingService} from '../../../services/data-sharing.service';
 import {ActivatedRoute} from '@angular/router';
+import {DataService} from '../../../services/data.service';
 
 @Component({
   selector: 'app-question-item',
@@ -21,14 +21,12 @@ export class QuestionItemComponent implements OnInit {
 
   newAnswer: AnswerModel;
 
-  logged = false;
-
-  adminLogged = false;
-
   known = false;
 
+  owned = false;
+
   constructor(private connection: ConnectionService,
-              private dataSharing: DataSharingService,
+              public dataService: DataService,
               private notify: NotificationService,
               private route: ActivatedRoute) {
   }
@@ -47,10 +45,11 @@ export class QuestionItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSharing.admin.subscribe(value => this.adminLogged = value);
-    this.dataSharing.currentUser.subscribe(user => this.logged = !!user);
     if (this.route.snapshot.routeConfig.path === 'known') {
       this.known = true;
+    }
+    if (this.dataService.currentUser && (this.question.user === this.dataService.currentUser.username)) {
+      this.owned = true;
     }
   }
 

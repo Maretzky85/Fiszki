@@ -14,13 +14,15 @@ export interface PageableModel {
   empty: boolean;
 }
 
-interface Pageable {
+export interface Pageable {
   sort: Sort;
   pageSize: number;
   pageNumber: number;
   offset: number;
   paged: boolean;
   unpaged: boolean;
+  first?: boolean;
+  last?: boolean;
 }
 
 interface Sort {

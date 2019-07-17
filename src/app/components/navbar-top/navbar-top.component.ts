@@ -1,13 +1,11 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {ConnectionService} from '../../services/connection.service';
-import {QuestionTag} from '../../models/responseInterface';
-import {DataSharingService} from '../../services/data-sharing.service';
 import {TagModel} from '../../models/tagModel';
 import {NotificationService} from '../../services/notification.service';
 import {RegisterLoginComponent} from '../register-login/register-login.component';
 import {NgbDropdownConfig, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../../services/auth.service';
-import {UserModel} from '../../models/UserModel';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-navbar-top',
@@ -18,35 +16,24 @@ export class NavbarTopComponent implements OnInit {
 
   @Input() title: string;
 
-  @Output() public tagList;
-
   editNew = false;
 
   newTag = new TagModel();
-
-  user: UserModel;
-
-  userAdmin = false;
 
   REGISTER = 0;
   LOGIN = 1;
 
   constructor(private connection: ConnectionService,
-              private dataSharingService: DataSharingService,
               private notify: NotificationService,
               private modalService: NgbModal,
-              private dataSharing: DataSharingService,
               private authorization: AuthService,
-              private dropdownConfig: NgbDropdownConfig) {
+              private dropdownConfig: NgbDropdownConfig,
+              public dataService: DataService) {
   }
 
   openModal(mode: number) {
     const modalRef = this.modalService.open(RegisterLoginComponent, {size: 'lg', centered: true});
     modalRef.componentInstance.mode = mode;
-  }
-
-  changeCategory(category: number) {
-    this.dataSharingService.changeCategory(category);
   }
 
   submitNewTag() {
@@ -56,29 +43,13 @@ export class NavbarTopComponent implements OnInit {
           this.editNew = false;
           this.newTag = new TagModel();
           this.notify.showSuccess(value.tagName, 'Saved');
-          this.loadTags();
         }, error1 => {
           this.notify.handleError(error1);
         });
   }
 
-  loadTags() {
-    this.connection.getTags().subscribe(
-      (value: QuestionTag[]) => {
-        this.tagList = value;
-        this.dataSharing.changeTagsAvailable(value);
-      },
-      (error) => this.notify.handleError(error)
-    );
-  }
-
   ngOnInit() {
     this.dropdownConfig.autoClose = true;
-    this.loadTags();
-    this.dataSharing.currentUser
-      .subscribe(
-        (user: UserModel ) => this.user = user
-      );
   }
 
   logout() {
