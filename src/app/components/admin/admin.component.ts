@@ -17,15 +17,16 @@ export class AdminComponent implements OnInit {
               private dataService: DataService) { }
 
   ngOnInit() {
-    if (this.dataService.isAdmin) {
-      this.loadUsers();
-    }
+    console.log('admin comp created');
+    // if (this.dataService.isAdmin) {
+    this.loadUsers();
+    // }
   }
 
   loadUsers(): void {
-    if (this.dataService.isAdmin) {
+    // if (this.dataService.isAdmin) {
       this.users$ = this.connection.getUsers();
-    }
+    // }
   }
 
 }
