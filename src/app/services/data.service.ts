@@ -83,6 +83,12 @@ export class DataService {
   }
 
   loadAll(inputParams?): void {
+    if (!inputParams) {
+      inputParams = {
+        page: 0,
+        size: 10
+      };
+    }
     this.questions$ = this.connection.getAllQuestions(inputParams)
       .pipe(
         map((page: PageableModel) => {
