@@ -19,6 +19,7 @@ import {RegisterLoginComponent} from './components/register-login/register-login
 import {InterceptorService} from './services/interceptor.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {WINDOW_PROVIDERS} from './services/window.service';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {WINDOW_PROVIDERS} from './services/window.service';
     AnswerItemComponent,
     NavbarTopComponent,
     NewQuestionComponent,
-    RegisterLoginComponent
+    RegisterLoginComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

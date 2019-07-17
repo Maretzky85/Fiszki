@@ -6,6 +6,7 @@ import {TagModel} from '../models/tagModel';
 import {Observable} from 'rxjs';
 import {PageableModel} from '../models/pageableModel';
 import {environment} from '../../environments/environment';
+import {UserModel} from '../models/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -130,5 +131,11 @@ export class ConnectionService {
       'users/known_questions/',
       {headers: this.headers}
     );
+  }
+
+  getUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(this.address +
+    'admin/users/',
+      {headers: this.headers});
   }
 }
