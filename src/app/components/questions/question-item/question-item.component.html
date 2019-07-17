@@ -6,7 +6,7 @@
       </span>
     </div>
     <div class="col">
-      <div *ngIf="dataService.currentUser">
+      <div *ngIf="dataService.currentUser && (owned || dataService.isAdmin)">
         <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger mr-2 float-right">Delete</span>
         <span (click)="editMode=!editMode" *ngIf="!editMode"
               class="badge btn badge-warning mr-2 float-right">Edit</span>

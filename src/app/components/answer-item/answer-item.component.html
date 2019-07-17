@@ -1,7 +1,7 @@
 <div *ngIf="answer" class="container mt-1">
 
   <div class="row">
-    <div class="col background-primary-light">
+    <div class="col background-primary-light" *ngIf="owned || dataService.isAdmin">
       <button (click)="editMode = !editMode" *ngIf="!editMode && dataService.currentUser"
               class="badge btn btn-warning float-left">Edit
       </button>

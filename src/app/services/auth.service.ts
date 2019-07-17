@@ -13,7 +13,8 @@ export class AuthService {
   private user = new BehaviorSubject(undefined);
   currentUser$ = this.user.asObservable();
 
-  isAdmin = false;
+  private isAdmin = new BehaviorSubject(false);
+  isCurrentUserAdmin$ = this.isAdmin.asObservable();
 
   token;
 
@@ -61,9 +62,9 @@ export class AuthService {
               this.user.next(user);
               const roles: string = x.headers.get('roles');
               if (roles.includes('ADMIN')) {
-                this.isAdmin = true;
+                this.isAdmin.next(true);
               } else {
-                this.isAdmin = false;
+                this.isAdmin.next(false);
               }
             }
           }

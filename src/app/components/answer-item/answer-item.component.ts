@@ -17,6 +17,8 @@ export class AnswerItemComponent implements OnInit {
 
   editMode = false;
 
+  owned = false;
+
   constructor(private connection: ConnectionService,
               public dataService: DataService,
               private notify: NotificationService) {
@@ -47,6 +49,9 @@ export class AnswerItemComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.dataService.currentUser && (this.answer.user === this.dataService.currentUser.username)) {
+      this.owned = true;
+    }
   }
 
 }

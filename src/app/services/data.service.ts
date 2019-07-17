@@ -33,7 +33,7 @@ export class DataService {
   }
 
   init(): void {
-    this.isAdmin = this.auth.isAdmin;
+    this.auth.isCurrentUserAdmin$.subscribe(value => this.isAdmin = value)
     this.tags$ = this.connection.getTags();
     this.auth.currentUser$
       .subscribe((user: UserModel) => this.currentUser = user);

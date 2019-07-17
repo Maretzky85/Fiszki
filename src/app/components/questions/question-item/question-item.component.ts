@@ -23,6 +23,8 @@ export class QuestionItemComponent implements OnInit {
 
   known = false;
 
+  owned = false;
+
   constructor(private connection: ConnectionService,
               public dataService: DataService,
               private notify: NotificationService,
@@ -45,6 +47,9 @@ export class QuestionItemComponent implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.routeConfig.path === 'known') {
       this.known = true;
+    }
+    if (this.dataService.currentUser && (this.question.user === this.dataService.currentUser.username)) {
+      this.owned = true;
     }
   }
 
