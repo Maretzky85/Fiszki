@@ -3,6 +3,7 @@ import {UserModel} from '../models/UserModel';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,12 @@ export class AuthService {
 
   token;
 
-  // address = 'https://fiszkiapi.sikoramarek.com/';
-  address = 'http://localhost:8080/';
+  address: string;
+
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(private http: HttpClient) {
+    this.address = environment.address;
   }
 
   logOut() {

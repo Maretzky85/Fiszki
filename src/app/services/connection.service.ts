@@ -5,16 +5,17 @@ import {AnswerModel} from '../models/answerModel';
 import {TagModel} from '../models/tagModel';
 import {Observable} from 'rxjs';
 import {PageableModel} from '../models/pageableModel';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnectionService {
-  // address = 'https://fiszkiapi.sikoramarek.com/';
-  address = 'http://localhost:8080/';
+  address: string;
   headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
 
   constructor(public http: HttpClient) {
+    this.address = environment.address;
   }
 
   getQuestions(questionId?: number): Observable<QuestionModel[]> {
