@@ -13,7 +13,7 @@ export class NotificationService {
   options = {
     positionClass: 'toast-bottom-center',
     progressBar: true,
-    timeOut: 1500
+    timeOut: 2000
   };
 
   showSuccess(message, title) {

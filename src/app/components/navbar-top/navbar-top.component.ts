@@ -42,6 +42,7 @@ export class NavbarTopComponent implements OnInit {
         (value: TagModel) => {
           this.editNew = false;
           this.newTag = new TagModel();
+          this.dataService.reloadTags();
           this.notify.showSuccess(value.tagName, 'Saved');
         }, error1 => {
           this.notify.handleError(error1);

@@ -40,6 +40,10 @@ export class DataService {
     this.questions$ = this.connection.getQuestions();
   }
 
+  reloadTags(): void {
+    this.tags$ = this.connection.getTags();
+  }
+
   next(): void {
     if (this.page && !this.page.last) {
       this.loadAll({
