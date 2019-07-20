@@ -32,7 +32,7 @@ export class SwipeService {
           this.dataService.next();
         }
         if (swipe === 'previous') {
-          this.dataService.prev();
+          // this.dataService.prev();
         }
       }
     }

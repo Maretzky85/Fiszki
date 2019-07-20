@@ -28,10 +28,4 @@ export class QuestionComponent implements OnInit {
   loadNext() {
     this.dataService.next();
   }
-
-  loadPrev() {
-    this.dataService.prev();
-  }
-
-
 }

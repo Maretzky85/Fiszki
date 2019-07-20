@@ -1,18 +1,28 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {TagModel} from '../models/tagModel';
 import {ConnectionService} from './connection.service';
 import {NotificationService} from './notification.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, fromEvent, merge, Observable} from 'rxjs';
 import {AuthService} from './auth.service';
 import {UserModel} from '../models/UserModel';
 import {QuestionModel} from '../models/questionModel';
 import {Pageable, PageableModel} from '../models/pageableModel';
-import {map} from 'rxjs/operators';
+import {debounceTime, distinct, filter, flatMap, map, tap} from 'rxjs/operators';
+import {WINDOW} from './window.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
+  constructor(private connection: ConnectionService,
+              private auth: AuthService,
+              private notify: NotificationService,
+              @Inject(WINDOW) private window: Window) {
+    this.init();
+  }
+
+  private cache = [];
 
   questions$: Observable<QuestionModel[]>;
 
@@ -26,14 +36,37 @@ export class DataService {
 
   page: Pageable;
 
-  constructor(private connection: ConnectionService,
-              private auth: AuthService,
-              private notify: NotificationService) {
-    this.init();
+  private pageByManual$ = new BehaviorSubject(false);
+
+  private loadNextByScroll$ = fromEvent(this.window, 'scroll')
+    .pipe(
+      map(() => (this.getScrollPercent(this.window.scrollY))),
+      filter(percent => percent > 0.8),
+      map(value => value > 0.8),
+      debounceTime(200),
+    );
+
+  private loadDataStream$ =
+    merge(this.loadNextByScroll$, this.pageByManual$);
+
+  private getScrollPercent(scroll: number) {
+    return ((scroll + this.window.innerHeight) / this.window.document.body.scrollHeight);
+  }
+
+  private getNextInputParams() {
+    const inputParams = {
+      page: 0,
+      size: 10
+    };
+    if (this.page) {
+      inputParams.page = this.page.last ? this.page.pageNumber : this.page.pageNumber + 1;
+      inputParams.size = this.page.pageSize;
+    }
+    return inputParams;
   }
 
   init(): void {
-    this.auth.isCurrentUserAdmin$.subscribe(value => this.isAdmin = value)
+    this.auth.isCurrentUserAdmin$.subscribe(value => this.isAdmin = value);
     this.tags$ = this.connection.getTags();
     this.auth.currentUser$
       .subscribe((user: UserModel) => this.currentUser = user);
@@ -45,25 +78,10 @@ export class DataService {
   }
 
   next(): void {
-    if (this.page && !this.page.last) {
-      this.loadAll({
-        page: this.page.pageNumber + 1,
-        size: this.page.pageSize
-      });
-    } else
     if (this.selectedCategory === 0) {
       this.questions$ = this.connection.getQuestions();
     } else {
       this.questions$ = this.connection.getQuestionsByTagId(this.selectedCategory);
-    }
-  }
-
-  prev() {
-    if (this.page && !this.page.first) {
-      this.loadAll({
-        page: this.page.pageNumber - 1,
-        size: this.page.pageSize
-      });
     }
   }
 
@@ -86,20 +104,29 @@ export class DataService {
     this.questions$ = this.connection.getQuestions(questionId);
   }
 
-  loadAll(inputParams?): void {
-    if (!inputParams) {
-      inputParams = {
-        page: 0,
-        size: 10
-      };
-    }
-    this.questions$ = this.connection.getAllQuestions(inputParams)
+  loadAll(): void {
+    this.cache = [];
+    this.questions$ = this.loadDataStream$
       .pipe(
-        map((page: PageableModel) => {
-          this.page = page.pageable;
-          this.page.last = page.last;
-          this.page.first = page.first;
-          return page.content;
-        }));
+        flatMap(() => {
+          return this.connection.getAllQuestions(this.getNextInputParams())
+            .pipe(
+              map(
+                (page: PageableModel ) => {
+                  this.page = page.pageable;
+                  this.page.last = page.last;
+                  this.page.first = page.first;
+                  let result = [];
+                  this.cache.forEach(value => result = result.concat(value));
+                  if (this.cache[page.pageable.pageNumber] === undefined) {
+                    result = result.concat(page.content);
+                    this.cache[this.page.pageNumber] = page.content;
+                  }
+                  return result;
+                }
+              )
+            );
+        })
+      );
   }
 }
