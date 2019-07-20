@@ -1,34 +1,35 @@
 <nav class="navbar navbar-expand-lg background-primary-dark fixed-top">
   <span class="navbar-brand d-none d-md-inline-block">
-    <a routerLink="">{{ title }}</a>
+    <a routerLink="" (click)="dataService.setCategory(0)">{{ title }}</a>
   </span>
 
-  <div ngbDropdown>
-    <button class="btn btn-outline-accent" id="categoryDropdown" ngbDropdownToggle>Categories</button>
-    <div aria-labelledby="categoryDropdown" ngbDropdownMenu>
-      <button (click)="dataService.setCategory(0)"
-              class="dropdown-item" routerLink="home">
-        All
-      </button>
-      <div *ngFor="let tag of (dataService.tags$ | async)">
-        <button (click)="dataService.setCategory(tag.id)"
-                class="dropdown-item"
-                routerLink="home">
-          {{ tag.tagName }}
+  <div class="btn-group">
+    <div ngbDropdown class="btn-group" role="group">
+      <button class="btn btn-outline-accent" id="categoryDropdown" ngbDropdownToggle>Categories</button>
+      <div aria-labelledby="categoryDropdown" ngbDropdownMenu>
+        <button (click)="dataService.setCategory(0)"
+                class="dropdown-item" routerLink="home">
+          All
         </button>
+        <div *ngFor="let tag of (dataService.tags$ | async)">
+          <button (click)="dataService.setCategory(tag.id)"
+                  class="dropdown-item"
+                  routerLink="home">
+            {{ tag.tagName }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-
-  <div *ngIf="dataService.currentUser" class="d-inline-block" ngbDropdown>
-    <button class="btn btn-outline-accent" id="addDropdown" ngbDropdownToggle>Add...</button>
-    <div aria-labelledby="addDropdown" ngbDropdownMenu>
-      <button class="dropdown-item"
-              routerLink="newQuestion">
-        New Question
-      </button>
-      <button (click)="editNew = !editNew" class="dropdown-item">Add new category</button>
+    <div *ngIf="dataService.currentUser" class="btn-group" ngbDropdown role="group">
+      <button class="btn btn-outline-accent" id="addDropdown" ngbDropdownToggle>Add...</button>
+      <div aria-labelledby="addDropdown" ngbDropdownMenu>
+        <button ngbDropdownItem
+                routerLink="newQuestion">
+          New Question
+        </button>
+        <button (click)="editNew = !editNew" ngbDropdownItem>Add new category</button>
+      </div>
     </div>
   </div>
 
@@ -44,31 +45,39 @@
     </div>
   </div>
 
-  <div *ngIf="dataService.currentUser">
-    <div class="d-inline-block" ngbDropdown>
-      <button class="btn btn-outline-accent" id="userDropdown" ngbDropdownToggle>{{ dataService.currentUser.username }}</button>
+  <div *ngIf="dataService.currentUser else unLogged">
+    <div display="dynamic" ngbDropdown placement="bottom-right">
+      <button class="btn btn-outline-accent" id="userDropdown"
+              ngbDropdownToggle>{{ dataService.currentUser.username }}</button>
       <div aria-labelledby="userDropdown" ngbDropdownMenu>
-        <button
-          class="dropdown-item" (click)="dataService.loadAll()">
+        <button (click)="dataService.loadAll()"
+                ngbDropdownItem
+                routerLink="">
           Show All
         </button>
-        <button
-          class="dropdown-item"
-          routerLink="/known"
-          (click)="dataService.knownQuestions()">
+        <button (click)="dataService.knownQuestions()"
+                ngbDropdownItem
+                routerLink="/known">
           Show learned
         </button>
-        <button
-          (click)="logout()"
-          class="dropdown-item">Log Out
+        <button (click)="dataService.knownQuestions()"
+                *ngIf="dataService.isAdmin"
+                ngbDropdownItem
+                routerLink="/admin">
+          Administrate
+        </button>
+        <button (click)="logout()"
+                ngbDropdownItem>Log Out
         </button>
 
       </div>
     </div>
 
   </div>
-  <div *ngIf="!dataService.currentUser">
-    <button (click)="openModal(REGISTER)" class="btn btn-sm btn-outline-accent-secondary mr-2">Register</button>
-    <button (click)="openModal(LOGIN)" class="btn btn-sm btn-outline-accent-secondary">Login</button>
-  </div>
+  <ng-template #unLogged>
+    <div>
+      <button (click)="openModal(REGISTER)" class="btn btn-sm btn-outline-accent-secondary mr-2">Register</button>
+      <button (click)="openModal(LOGIN)" class="btn btn-sm btn-outline-accent-secondary">Login</button>
+    </div>
+  </ng-template>
 </nav>

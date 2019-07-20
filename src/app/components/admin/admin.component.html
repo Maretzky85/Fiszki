@@ -1,0 +1,5 @@
+<div class="container background-primary">
+  <div class="jumbotron background-primary">
+    <app-user-item *ngFor="let user of (users$ | async)" [user]="user"></app-user-item>
+  </div>
+</div>
