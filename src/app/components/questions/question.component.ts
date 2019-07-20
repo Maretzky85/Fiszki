@@ -30,7 +30,7 @@ export class QuestionComponent implements OnInit {
   }
 
   loadPrev() {
-    this.dataService.prev();
+    // this.dataService.prev();
   }
 
 
