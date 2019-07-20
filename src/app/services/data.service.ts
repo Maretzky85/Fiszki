@@ -78,27 +78,12 @@ export class DataService {
   }
 
   next(): void {
-    // if (this.page && !this.page.last) {
-    //   this.loadAll({
-    //     page: this.page.pageNumber + 1,
-    //     size: this.page.pageSize
-    //   });
-    // } else
     if (this.selectedCategory === 0) {
       this.questions$ = this.connection.getQuestions();
     } else {
       this.questions$ = this.connection.getQuestionsByTagId(this.selectedCategory);
     }
   }
-
-  // prev() {
-  //   if (this.page && !this.page.first) {
-  //     this.loadAll({
-  //       page: this.page.pageNumber - 1,
-  //       size: this.page.pageSize
-  //     });
-  //   }
-  // }
 
   knownQuestions() {
     if (this.currentUser) {

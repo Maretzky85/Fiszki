@@ -4,11 +4,7 @@
     <div class="row">
       <div class="col" *ngIf="!dataService.page">
         <button (click)="loadNext()"
-                *ngIf="(dataService.page && !dataService.page.last) || !dataService.page"
                 class="btn btn-outline-accent-secondary float-right">next
-        </button>
-        <button (click)="loadPrev()" *ngIf="dataService.page && !dataService.page.first"
-                class="btn btn-outline-accent-secondary float-left">prev
         </button>
       </div>
     </div>
