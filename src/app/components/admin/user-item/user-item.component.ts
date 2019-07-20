@@ -40,7 +40,7 @@ export class UserItemComponent implements OnInit {
       tap((x: QuestionModel[] ) => this.questionsCount = x.length)
     );
     this.userAnswers = this.connection.getAnswersForUser(this.user.username).pipe(
-      tap((x: AnswerModel[] ) => this.answersCount = x.length)
+      tap<AnswerModel[]>(x => this.answersCount = x.length)
     );
   }
 
