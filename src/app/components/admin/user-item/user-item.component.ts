@@ -4,6 +4,7 @@ import {QuestionModel} from '../../../models/questionModel';
 import {Observable} from 'rxjs';
 import {ConnectionService} from '../../../services/connection.service';
 import {tap} from 'rxjs/operators';
+import {AnswerModel} from '../../../models/answerModel';
 
 @Component({
   selector: 'app-user-item',
@@ -16,9 +17,15 @@ export class UserItemComponent implements OnInit {
 
   userQuestions: Observable<QuestionModel[]>;
 
+  userAnswers: Observable<AnswerModel[]>;
+
   questionsCount: number;
 
-  questionsHidden = true;
+  answersCount: number;
+
+  activityHidden = true;
+
+  showingQuestions = true;
 
   loaded = false;
 
@@ -32,6 +39,26 @@ export class UserItemComponent implements OnInit {
     this.userQuestions = this.connection.getQuestionsForUser(this.user.username).pipe(
       tap((x: QuestionModel[] ) => this.questionsCount = x.length)
     );
+    this.userAnswers = this.connection.getAnswersForUser(this.user.username).pipe(
+      tap((x: AnswerModel[] ) => this.answersCount = x.length)
+    );
   }
 
+  showAnswer() {
+    if (!this.activityHidden && !this.showingQuestions) {
+      this.activityHidden = true;
+      console.log(this.activityHidden);
+      return;
+    }
+    this.activityHidden = false;
+    this.showingQuestions = false;
+  }
+  showQuestion() {
+    if (!this.activityHidden && this.showingQuestions) {
+      this.activityHidden = true;
+      return;
+    }
+    this.activityHidden = false;
+    this.showingQuestions = true;
+  }
 }

@@ -144,4 +144,10 @@ export class ConnectionService {
     'admin/users/' + username + '/questions',
       {headers: this.headers});
   }
+
+  getAnswersForUser(username: string): Observable<AnswerModel[]> {
+    return this.http.get<AnswerModel[]>(this.address +
+      'admin/users/' + username + '/answers',
+      {headers: this.headers});
+  }
 }

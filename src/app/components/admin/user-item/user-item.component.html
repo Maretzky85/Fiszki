@@ -12,14 +12,25 @@
             *ngIf="!loaded"
             class="btn btn-accent-secondary float-right">
       Load activities</button>
-    <button (click)="questionsHidden=!questionsHidden"
+    <button (click)="showQuestion()"
             *ngIf="questionsCount > 0"
             class="btn btn-accent-secondary float-right">
-      {{questionsCount}}</button>
+      Q: {{questionsCount}}</button>
+    <button (click)="showAnswer()"
+            *ngIf="answersCount > 0"
+            class="btn btn-accent-secondary float-right">
+      A: {{answersCount}}</button>
   </div>
+
+  <div *ngIf="loaded" class="container background-primary">
+    <div *ngFor="let answer of (userAnswers | async)">
+      <app-answer-item *ngIf="!activityHidden && !showingQuestions" [answer]="answer"></app-answer-item>
+    </div>
+  </div>
+
   <div *ngIf="loaded" class="container background-primary">
     <div *ngFor="let question of (userQuestions | async)">
-      <app-question-item *ngIf="!questionsHidden" [question]="question"></app-question-item>
+      <app-question-item *ngIf="!activityHidden && showingQuestions" [question]="question"></app-question-item>
     </div>
   </div>
 </div>
