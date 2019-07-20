@@ -18,6 +18,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterLoginComponent} from './components/register-login/register-login.component';
 import {InterceptorService} from './services/interceptor.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
+import {WINDOW_PROVIDERS} from './services/window.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {LoadingBarModule} from '@ngx-loading-bar/core';
     LoadingBarModule
   ],
   providers: [
+    WINDOW_PROVIDERS,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,

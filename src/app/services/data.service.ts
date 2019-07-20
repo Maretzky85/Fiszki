@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {TagModel} from '../models/tagModel';
 import {ConnectionService} from './connection.service';
 import {NotificationService} from './notification.service';
@@ -8,6 +8,7 @@ import {UserModel} from '../models/UserModel';
 import {QuestionModel} from '../models/questionModel';
 import {Pageable, PageableModel} from '../models/pageableModel';
 import {debounceTime, distinct, filter, flatMap, map, tap} from 'rxjs/operators';
+import {WINDOW} from './window.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class DataService {
 
   constructor(private connection: ConnectionService,
               private auth: AuthService,
-              private notify: NotificationService) {
+              private notify: NotificationService,
+              @Inject(WINDOW) private window: Window) {
     this.init();
   }
 
@@ -36,10 +38,9 @@ export class DataService {
 
   private pageByManual$ = new BehaviorSubject(false);
 
-  private loadNextByScroll$ = fromEvent(window, 'scroll')
+  private loadNextByScroll$ = fromEvent(this.window, 'scroll')
     .pipe(
-      map(() => (this.getScrollPercent(window.scrollY))),
-      // tap(x => console.log(x)),
+      map(() => (this.getScrollPercent(this.window.scrollY))),
       filter(percent => percent > 0.8),
       map(value => value > 0.8),
       debounceTime(200),
@@ -49,7 +50,7 @@ export class DataService {
     merge(this.loadNextByScroll$, this.pageByManual$);
 
   private getScrollPercent(scroll: number) {
-    return ((scroll + window.innerHeight) / document.body.scrollHeight);
+    return ((scroll + this.window.innerHeight) / this.window.document.body.scrollHeight);
   }
 
   private getNextInputParams() {
