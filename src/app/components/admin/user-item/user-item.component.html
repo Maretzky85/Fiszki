@@ -11,7 +11,8 @@
     <button (click)="loadActivities()"
             *ngIf="!loaded"
             class="btn btn-accent-secondary float-right">
-      Load activities</button>
+      Load activities
+    </button>
     <button (click)="showQuestion()"
             *ngIf="questionsCount > 0"
             class="btn btn-accent-secondary float-right">
@@ -24,7 +25,15 @@
 
   <div *ngIf="loaded" class="container background-primary">
     <div *ngFor="let answer of (userAnswers | async)">
-      <app-answer-item *ngIf="!activityHidden && !showingQuestions" [answer]="answer"></app-answer-item>
+      <div *ngIf="!activityHidden && !showingQuestions" class="mt-2">
+        <div class="card-header background-primary-dark mb-n2">
+          <button class="btn badge btn-accent-secondary"
+                  routerLink="/questions/{{answer.question_id}}">
+            Go to Question
+          </button>
+        </div>
+        <app-answer-item [answer]="answer"></app-answer-item>
+      </div>
     </div>
   </div>
 
