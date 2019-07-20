@@ -138,4 +138,10 @@ export class ConnectionService {
     'admin/users/',
       {headers: this.headers});
   }
+
+  getQuestionsForUser(username: string): Observable<QuestionModel[]> {
+    return this.http.get<QuestionModel[]>(this.address +
+    'admin/users/' + username + '/questions',
+      {headers: this.headers});
+  }
 }

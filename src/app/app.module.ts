@@ -20,6 +20,7 @@ import {InterceptorService} from './services/interceptor.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {WINDOW_PROVIDERS} from './services/window.service';
 import { AdminComponent } from './components/admin/admin.component';
+import { UserItemComponent } from './components/admin/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AdminComponent } from './components/admin/admin.component';
     NavbarTopComponent,
     NewQuestionComponent,
     RegisterLoginComponent,
-    AdminComponent
+    AdminComponent,
+    UserItemComponent
   ],
   imports: [
     BrowserModule,

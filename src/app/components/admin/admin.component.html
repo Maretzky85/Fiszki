@@ -1,12 +1,5 @@
-<div class="container background-primary-dark">
-  <div class="jumbotron">
-    <div *ngFor="let user of (users$ | async)" class="card">
-      <div class="card-header">
-        Username: {{user.username}}
-      </div>
-      <div class="card-body">
-        Id: {{user.id}}
-      </div>
-    </div>
+<div class="container background-primary">
+  <div class="jumbotron background-primary">
+    <app-user-item *ngFor="let user of (users$ | async)" [user]="user"></app-user-item>
   </div>
 </div>

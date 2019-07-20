@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserModel} from '../../models/UserModel';
 import {ConnectionService} from '../../services/connection.service';
 import {Observable} from 'rxjs';
@@ -14,19 +14,19 @@ export class AdminComponent implements OnInit {
   users$: Observable<UserModel[]>;
 
   constructor(private connection: ConnectionService,
-              private dataService: DataService) { }
+              private dataService: DataService) {
+  }
 
   ngOnInit() {
-    console.log('admin comp created');
-    // if (this.dataService.isAdmin) {
-    this.loadUsers();
-    // }
+    if (this.dataService.isAdmin) {
+      this.loadUsers();
+    }
   }
 
   loadUsers(): void {
-    // if (this.dataService.isAdmin) {
+    if (this.dataService.isAdmin) {
       this.users$ = this.connection.getUsers();
-    // }
+    }
   }
 
 }

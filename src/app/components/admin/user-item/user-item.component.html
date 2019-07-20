@@ -1,0 +1,25 @@
+<div class="card mt-2">
+  <div class="card-header background-primary-dark">
+    Username: {{user.username}}
+    <span *ngFor="let role of user.roles"
+          class="badge badge-custom-accent ml-2 float-right">
+      {{role.role}}
+    </span>
+  </div>
+  <div class="card-body">
+    email: {{user.email}} <br>
+    <button (click)="loadActivities()"
+            *ngIf="!loaded"
+            class="btn btn-accent-secondary float-right">
+      Load activities</button>
+    <button (click)="questionsHidden=!questionsHidden"
+            *ngIf="questionsCount > 0"
+            class="btn btn-accent-secondary float-right">
+      {{questionsCount}}</button>
+  </div>
+  <div *ngIf="loaded" class="container background-primary">
+    <div *ngFor="let question of (userQuestions | async)">
+      <app-question-item *ngIf="!questionsHidden" [question]="question"></app-question-item>
+    </div>
+  </div>
+</div>
