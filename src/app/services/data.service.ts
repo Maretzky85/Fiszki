@@ -94,6 +94,10 @@ export class DataService {
     }
   }
 
+  search(searchPhrase: string) {
+    this.questions$ = this.connection.search(searchPhrase);
+  }
+
   setCategory(category: number) {
     this.page = undefined;
     this.selectedCategory = category;
