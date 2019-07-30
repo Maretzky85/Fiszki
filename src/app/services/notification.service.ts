@@ -36,7 +36,7 @@ export class NotificationService {
     if (error.status === 403) {
       this.toastr.warning('', 'Access Denied', this.options);
     } else {
-      this.toastr.error(error.message, error.error, this.options);
+      this.toastr.error(error.error.message, error.error.error, this.options);
     }
   }
 }

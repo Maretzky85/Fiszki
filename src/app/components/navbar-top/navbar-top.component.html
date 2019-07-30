@@ -50,6 +50,7 @@
       <button class="btn btn-outline-accent" id="userDropdown"
               ngbDropdownToggle>{{ dataService.currentUser.username }}</button>
       <div aria-labelledby="userDropdown" ngbDropdownMenu>
+        <input #search placeholder="search" (keyup.enter)="dataService.search(search.value)">
         <button (click)="dataService.loadAll()"
                 ngbDropdownItem
                 routerLink="">

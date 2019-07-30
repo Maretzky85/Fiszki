@@ -47,11 +47,7 @@ export class InterceptorService implements HttpInterceptor {
 
   private handleError(err: any) {
     if (err instanceof HttpErrorResponse) {
-      try {
         this.notify.handleError(err);
-      } catch (e) {
-        this.notify.showError('An error occurred', '');
-      }
       // log error
     }
   }

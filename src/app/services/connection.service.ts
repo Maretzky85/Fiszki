@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {QuestionModel} from '../models/questionModel';
 import {AnswerModel} from '../models/answerModel';
 import {TagModel} from '../models/tagModel';
@@ -106,13 +106,15 @@ export class ConnectionService {
   getAllQuestions(inputParams?): Observable<PageableModel> {
     return this.http.get<PageableModel>(this.address +
       'questions/',
-      {headers: this.headers,
-        params: inputParams ? inputParams : null});
+      {
+        headers: this.headers,
+        params: inputParams ? inputParams : null
+      });
   }
 
   acceptQuestion(id: number) {
     return this.http.post(this.address +
-    'admin/accept/'
+      'admin/accept/'
       + id,
       {},
       {headers: this.headers});
@@ -135,13 +137,13 @@ export class ConnectionService {
 
   getUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(this.address +
-    'admin/users/',
+      'admin/users/',
       {headers: this.headers});
   }
 
   getQuestionsForUser(username: string): Observable<QuestionModel[]> {
     return this.http.get<QuestionModel[]>(this.address +
-    'admin/users/' + username + '/questions',
+      'admin/users/' + username + '/questions',
       {headers: this.headers});
   }
 
@@ -149,5 +151,10 @@ export class ConnectionService {
     return this.http.get<AnswerModel[]>(this.address +
       'admin/users/' + username + '/answers',
       {headers: this.headers});
+  }
+
+  search(searchPhrase: string): Observable<QuestionModel[]> {
+    const searchParams = new HttpParams().set('search', searchPhrase);
+    return this.http.get<QuestionModel[]>(this.address + 'search', {headers: this.headers, params: searchParams});
   }
 }
