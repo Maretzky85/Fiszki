@@ -1,8 +1,14 @@
 <div class="card mt-2">
   <div class="card-header background-primary-dark">
     Username: {{user.username}}
+    <span *ngIf="!userIsAdmin"
+          (click)="makeAdmin()"
+          class="badge badge-dark ml-2 float-right">
+      ADMIN
+    </span>
     <span *ngFor="let role of user.roles"
-          class="badge badge-custom-accent ml-2 float-right">
+          class="badge badge-custom-accent ml-2 float-right"
+          (click)="role.role === 'ADMIN' ? makeAdmin() : undefined">
       {{role.role}}
     </span>
   </div>
@@ -10,7 +16,7 @@
     email: {{user.email}} <br>
     <button (click)="loadActivities()"
             *ngIf="!loaded"
-            class="btn btn-accent-secondary float-right">
+            class="btn btn-accent-secondary flogit cat-right">
       Load activities
     </button>
     <button (click)="showQuestion()"

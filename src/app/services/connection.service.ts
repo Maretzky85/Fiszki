@@ -157,4 +157,12 @@ export class ConnectionService {
     const searchParams = new HttpParams().set('search', searchPhrase);
     return this.http.get<QuestionModel[]>(this.address + 'search', {headers: this.headers, params: searchParams});
   }
+
+  makeAdmin(user: UserModel): Observable<UserModel> {
+    return this.http.post<UserModel>(
+      this.address +
+    'admin/users/' + user.username,
+      JSON.stringify(user),
+      {headers: this.headers});
+  }
 }

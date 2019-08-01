@@ -7,6 +7,6 @@ export class UserModel {
 }
 
 interface Role {
-  id: number;
+  id?: number;
   role: string;
 }

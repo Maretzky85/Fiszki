@@ -29,15 +29,23 @@ export class UserItemComponent implements OnInit {
 
   loaded = false;
 
-  constructor(private connection: ConnectionService) { }
+  userIsAdmin = false;
+
+  constructor(private connection: ConnectionService) {
+  }
 
   ngOnInit() {
+    this.userIsAdmin = this.isAdmin();
+  }
+
+  isAdmin(): boolean {
+    return !!this.user.roles.find(value => value.role === 'ADMIN');
   }
 
   loadActivities() {
     this.loaded = true;
     this.userQuestions = this.connection.getQuestionsForUser(this.user.username).pipe(
-      tap((x: QuestionModel[] ) => this.questionsCount = x.length)
+      tap((x: QuestionModel[]) => this.questionsCount = x.length)
     );
     this.userAnswers = this.connection.getAnswersForUser(this.user.username).pipe(
       tap<AnswerModel[]>(x => this.answersCount = x.length)
@@ -53,6 +61,7 @@ export class UserItemComponent implements OnInit {
     this.activityHidden = false;
     this.showingQuestions = false;
   }
+
   showQuestion() {
     if (!this.activityHidden && this.showingQuestions) {
       this.activityHidden = true;
@@ -60,5 +69,14 @@ export class UserItemComponent implements OnInit {
     }
     this.activityHidden = false;
     this.showingQuestions = true;
+  }
+
+  makeAdmin() {
+    if (this.user.roles.find(value => value.role === 'ADMIN')) {
+      this.user.roles = this.user.roles.filter(value => value.role !== 'ADMIN');
+    } else {
+      this.user.roles.push({id: 1, role: 'ADMIN'});
+    }
+    this.connection.makeAdmin(this.user).subscribe((value: UserModel) => {this.user = value; this.userIsAdmin = this.isAdmin(); });
   }
 }
