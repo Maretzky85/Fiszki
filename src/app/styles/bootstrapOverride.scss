@@ -1,11 +1,36 @@
-$primary-dark: #EDC7B7;
-$primary: #BAB2B5;
-$primary-light: #EEE2DC;
+$primary-dark: #17252A;
+$primary: #2b7a78;
+$primary-light: #3AAFA9;
 $accent: #123C69;
 $accent-transparent: rgba(18, 60, 105, .5);
 $accent-secondary: #AC3B61;
 $accent-secondary-transparent: rgba(172, 59, 97, .5);
 $color-text: #FFF;
+
+.author-placeholder{
+  background-image: linear-gradient(to right, rgba(58, 175, 169, 1), rgba(43, 122, 120, 0.5));
+}
+
+.title-placeholder{
+  font-size: larger;
+  text-align: center;
+  min-height: 2em;
+}
+
+.badge-placeholder{
+  min-height: 1em;
+}
+
+.border-radius-top{
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.border-radius-bottom{
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  min-height: 2em;
+}
 
 pre {
   overflow-x: scroll;
@@ -15,18 +40,39 @@ pre {
   word-wrap: break-spaces;
 }
 
+.badge-danger-custom{
+  color: $color-text;
+  border-color: #FF0000;
+  border-width: 1px;
+}
+
+.badge-danger-custom:hover{
+  background-color: #FF0000;
+}
+
+
+.badge-warning-custom{
+  color: $color-text;
+  border-color: #FFFF00;
+  border-width: 1px;
+}
+
+.badge-warning-custom:hover{
+  background-color: #FFFF00;
+}
+
 .background-primary-dark{
   background-color: $primary-dark;
 }
 
 .background-primary-light{
   background-color: $primary-light;
-  color: #000000;
+  color: #FEFFFF;
 }
 
 .background-primary{
   background-color: $primary;
-  color: #000000;
+  color: #FEFFFF;
 }
 
 .color-accent{
@@ -74,8 +120,12 @@ pre {
   border-radius: 0;
 }
 
-.btn-accent{color:$color-text;background-color:$accent-secondary;border-color:$accent}
-.btn-accent:hover{color:#fff;background-color:$accent;border-color:$accent-secondary}
+.btn-outline-secondary{
+  color: #000000;
+}
+
+.btn-accent{color:$color-text;background-color:$primary;border-color:$accent-secondary; border-radius: 50%;}
+.btn-accent:hover{color:#fff;background-color:$accent-secondary;border-color:$accent-secondary}
 .btn-accent.focus,.btn-info:focus{box-shadow:0 0 0 .2rem $accent-transparent}
 .btn-accent.disabled,.btn-info:disabled{color:$color-text;background-color:$accent-secondary;border-color:$accent}
 .btn-accent:not(:disabled):not(.disabled).active,
@@ -111,8 +161,8 @@ pre {
 .btn-accent-secondary.dropdown-toggle:focus{box-shadow:0 0 0 .2rem rgba(58,176,195,.5)}
 
 
-.btn-outline-accent-secondary{color:$accent;border-color:$accent-secondary}
-.btn-outline-accent-secondary:hover{color:$color-text;background-color:$accent;border-color:$accent-secondary}
+.btn-outline-accent-secondary{color: $color-text ;border-color:$accent-secondary}
+.btn-outline-accent-secondary:hover{color:$color-text;background-color:$accent-secondary;border-color:$accent}
 .btn-outline-accent-secondary.focus,
 .btn-outline-accent-secondary:focus{box-shadow:0 0 0 .2rem $accent-transparent}
 .btn-outline-accent-secondary.disabled,

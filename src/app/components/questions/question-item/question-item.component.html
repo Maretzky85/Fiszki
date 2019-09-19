@@ -1,5 +1,5 @@
 <div *ngIf="question" class="container mt-3">
-  <div class="row">
+  <div class="row mb-0 badge-placeholder">
     <div class="col">
       <span *ngFor="let tag of question.tags">
         <span class="badge badge-custom-accent ml-2"> {{ tag.tagName}} </span>
@@ -7,9 +7,9 @@
     </div>
     <div class="col">
       <div *ngIf="dataService.currentUser && (owned || dataService.isAdmin)">
-        <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger mr-2 float-right">Delete</span>
+        <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger-custom mr-2 float-right mt-2">Delete</span>
         <span (click)="editMode=!editMode" *ngIf="!editMode"
-              class="badge btn badge-warning mr-2 float-right">Edit</span>
+              class="badge btn badge-warning-custom mr-2 float-right mt-2">Edit</span>
       </div>
     </div>
   </div>
@@ -17,17 +17,17 @@
     <div *ngIf="!editMode"
          [class.col-11]="dataService.isAdmin && !question.accepted"
          [class.col]="!dataService.isAdmin || question.accepted"
-         class="background-primary-dark">
+         class="background-primary-dark border-radius-top title-placeholder col">
       {{ question.title }}
-      <button (click)="markQuestion()" *ngIf="dataService.currentUser && !known && question.accepted" class="btn btn-accent float-right">I know this</button>
-      <button (click)="markQuestion()" *ngIf="dataService.currentUser && known && question.accepted" class="btn btn-accent float-right">I forgot this</button>
+      <button (click)="markQuestion()" *ngIf="dataService.currentUser && !known && question.accepted" class="btn btn-sm btn-accent float-right mt-1">Learned</button>
+      <button (click)="markQuestion()" *ngIf="dataService.currentUser && known && question.accepted" class="btn btn-sm btn-accent float-right mt-1">I forgot this</button>
     </div>
     <div *ngIf="dataService.isAdmin && !question.accepted"
          [class.d-none]="question.accepted"
          class="col-1 background-primary-dark">
       <button (click)="acceptQuestion()" class="btn btn-accent">Accept</button>
     </div>
-    <input *ngIf="editMode" [(ngModel)]="question.title" class="col background-primary-dark">
+    <input *ngIf="editMode" [(ngModel)]="question.title" class="col background-primary">
   </div>
   <div class="row">
     <div *ngIf="!editMode" class="col background-primary-light p-2">
@@ -45,23 +45,23 @@
     </div>
   </div>
   <div *ngIf="question.user" class="row">
-    <div class="col background-primary-light">
-      <span class="float-right small">posted by: {{ question.user }}</span>
+    <div class="col background-primary-light author-placeholder">
+      <span class="float-right small">Author: {{ question.user }}</span>
     </div>
   </div>
-  <div class="row background-primary-light">
+  <div class="row background-primary-light border-radius-bottom">
     <div class="col">
       <span *ngIf="question.answers && question.answers.length > 0">
         <button (click)="showAnswer()"
                 *ngIf="hidden"
-                class="badge btn btn-outline-accent-secondary float-left">Show answer</button>
+                class="badge btn btn-outline-accent-secondary float-left mt-1">Show answer</button>
         </span>
     </div>
     <div class="col">
       <button
         (click)="hasNewAnswer()"
         *ngIf="!newAnswer && dataService.currentUser"
-        class="badge btn btn-outline-accent float-right">New Answer
+        class="badge btn btn-outline-accent float-right mt-1">New Answer
       </button>
     </div>
   </div>

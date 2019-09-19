@@ -12,7 +12,6 @@ import {SwipeService} from '../../services/swipe.service';
 export class QuestionComponent implements OnInit {
 
 
-
   constructor(private connection: ConnectionService,
               public dataService: DataService,
               public swipe: SwipeService,
@@ -26,6 +25,7 @@ export class QuestionComponent implements OnInit {
   }
 
   loadNext() {
+    document.getElementById('question').style.opacity = '0';
     this.dataService.next();
   }
 }
