@@ -10,6 +10,8 @@
         <span (click)="delete()" *ngIf="!editMode" class="badge btn badge-danger-custom mr-2 float-right mt-2">Delete</span>
         <span (click)="editMode=!editMode" *ngIf="!editMode"
               class="badge btn badge-warning-custom mr-2 float-right mt-2">Edit</span>
+        <span *ngIf="editMode" (click)="submitQuestion()" class="badge btn btn-success float-right">Save</span>
+        <span *ngIf="editMode" (click)="editMode=!editMode" class="badge btn badge-warning-custom float-right mr-2">Cancel</span>
       </div>
     </div>
   </div>
@@ -37,12 +39,7 @@
       </textarea>
   </div>
   <div *ngIf="editMode" class="row background-primary-light">
-    <div class="col">
-      <button (click)="submitQuestion()" class="badge btn btn-success float-left">Save</button>
-    </div>
-    <div class="col">
-      <button (click)="editMode=!editMode" class="badge btn btn-warning float-right">Cancel</button>
-    </div>
+
   </div>
   <div *ngIf="question.user" class="row">
     <div class="col background-primary-light author-placeholder">

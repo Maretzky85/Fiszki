@@ -1,27 +1,27 @@
 <div *ngIf="answer" class="container mt-1">
 
   <div class="row">
-    <div class="col background-primary-light" *ngIf="owned || dataService.isAdmin">
+    <div class="col background-primary" *ngIf="owned || dataService.isAdmin">
+      <button (click)="deleteAnswer()" *ngIf="!editMode && dataService.currentUser"
+              class="badge btn badge-danger-custom float-right">Delete
+      </button>
+
       <button (click)="editMode = !editMode" *ngIf="!editMode && dataService.currentUser"
-              class="badge btn btn-warning float-left">Edit
+              class="badge btn badge-warning-custom float-right mr-2">Edit
       </button>
 
       <button (click)="saveEditedAnswer()" *ngIf="editMode"
-              class="badge btn btn-outline-success float-left">Save
+              class="badge btn btn-success float-right">Save
       </button>
 
       <button (click)="editMode = !editMode" *ngIf="editMode"
-              class="badge btn btn-warning float-right">Cancel
-      </button>
-
-      <button (click)="deleteAnswer()" *ngIf="!editMode && dataService.currentUser"
-              class="badge btn btn-danger float-right">Delete
+              class="badge btn badge-warning-custom float-right mr-2">Cancel
       </button>
     </div>
   </div>
 
   <div class="row">
-    <div class="col background-primary-light">
+    <div class="col background-primary-light border-radius-top">
       <pre *ngIf="!editMode" class="p-2">{{ answer.answer }}</pre>
     </div>
   </div>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="row">
-    <div class="col background-primary-light">
+    <div class="col background-primary-light author-placeholder border-radius-bottom">
       <div *ngIf="answer.user" class="small float-right">posted by: {{answer.user}}</div>
     </div>
   </div>
