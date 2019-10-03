@@ -6,3 +6,8 @@ patch:
   'npm:moment:20170905':
     - ng-bootstrap > moment:
         patched: '2019-07-10T10:00:59.847Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T21:05:21.061Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T21:05:21.061Z'
