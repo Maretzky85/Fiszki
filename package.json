@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "private": true,
@@ -16,7 +16,7 @@
     "@angular/animations": "~8.1.0",
     "@angular/common": "~8.1.0",
     "@angular/compiler": "~8.1.0",
-    "@angular/core": "~8.1.0",
+    "@angular/core": "~11.0.5",
     "@angular/forms": "~8.1.0",
     "@angular/platform-browser": "~8.1.0",
     "@angular/platform-browser-dynamic": "~8.1.0",
@@ -28,9 +28,9 @@
     "ngx-loading-bar": "0.0.9",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.4.0",
-    "snyk": "^1.258.2",
     "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.0",
