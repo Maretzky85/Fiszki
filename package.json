@@ -23,7 +23,7 @@
     "@angular/router": "~8.1.0",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0",
     "@ngx-loading-bar/core": "^4.2.0",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.0",
     "ngx-bootstrap": "^5.0.0",
     "ngx-loading-bar": "0.0.9",
     "ngx-toastr": "^10.0.4",
